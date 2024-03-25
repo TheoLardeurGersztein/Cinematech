@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'media_management.apps.MediaManagementConfig'
+    'corsheaders',
+    'rest_framework',
+
+    'media_management'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
+]
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000',  # The default port for create-react-app
 ]
 
 ROOT_URLCONF = 'backend.urls'

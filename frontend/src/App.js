@@ -6,6 +6,7 @@ import {
 import './App.css';
 import { Link } from 'react-router-dom';
 import Contact from './contact'
+import Library from './library'
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
             <Header />
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route path="/lib" element={<Lib />} />
+                <Route path="/lib" element={<Library />} />
                 <Route path="/contact" element={<Contact />} />
             </Routes>
         </Router>
@@ -42,14 +43,6 @@ function Home() {
             <p>Bienvenu sur mon site !!</p>
         </div>
     );
-}
-
-function Lib() {
-    return (
-        <div>
-            <p>Ceci est la bibliotèque de films</p>
-        </div>
-    )
 }
 
 

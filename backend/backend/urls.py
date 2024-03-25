@@ -17,9 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from rest_framework import routers
+
+from media_management import views
+
+router = routers.DefaultRouter()
+router.register(r'movies', views.GetMovies)
 
 
 urlpatterns = [
-    path("movies/", include("media_management.urls")),
+    path('api/', include(router.urls)),
+    path('movies/', include("media_management.urls")),
     path('admin/', admin.site.urls),
 ]
