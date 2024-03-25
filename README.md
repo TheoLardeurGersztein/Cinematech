@@ -10,6 +10,12 @@
 npm install --prefix ./frontend
 ```
  
+2. Backend 
+
+List des packages django (pip install) : 
+- djangorestframework
+- Pillow
+- django-cors-headers
 
 
 ### Usage 
