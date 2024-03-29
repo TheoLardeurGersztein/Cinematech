@@ -16,6 +16,7 @@ List des packages django (pip install) :
 - djangorestframework
 - Pillow
 - django-cors-headers
+- requests
 
 
 ### Usage 

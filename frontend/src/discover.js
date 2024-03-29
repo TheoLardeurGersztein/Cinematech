@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getMoviesAPI } from './api';
+import { dicoverMoviesAPI } from './api';
 import axios from 'axios';
 import './library.css';
 
-function Library() {
+function Discover() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ function Library() {
   }, []);
 
   function getMovies() {
-    getMoviesAPI()
+    dicoverMoviesAPI()
         .then(res => {
         const moviesData = res.data;
         setMovies(moviesData);
@@ -21,10 +21,10 @@ function Library() {
   return (
     <div>
       {movies.map(movie => (
-        <p key={movie.id}>{movie.title}</p>
+        <p>{movie.title}</p>
       ))}
     </div>
   );
 }
 
-export default Library;
+export default Discover;
