@@ -22,11 +22,12 @@ from rest_framework import routers
 from media_management import views
 
 router = routers.DefaultRouter()
-router.register(r'movies', views.GetMovies)
-
+router.register(r'lib', views.LibraryMovies)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/search/', views.SearchMovies.as_view()),
+    path('api/discover/', views.DiscoverMovies.as_view()),
     path('movies/', include("media_management.urls")),
     path('admin/', admin.site.urls),
 ]
