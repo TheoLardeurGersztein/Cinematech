@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { dicoverMoviesAPI } from './api';
-import axios from 'axios';
+import MovieList from './movieCard';
 import './library.css';
 
 function Discover() {
@@ -20,9 +20,7 @@ function Discover() {
 
   return (
     <div>
-      {movies.map(movie => (
-        <p>{movie.title}</p>
-      ))}
+      <MovieList movies={movies} />
     </div>
   );
 }

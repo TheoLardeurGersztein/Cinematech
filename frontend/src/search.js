@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {searchMovieAPI} from "./api";
+import MovieList from "./movieCard";
 
 
 function Search() {
 
     const [movies, setMovies] = useState([]);
-    const [formData, setFormData] = useState({
-        title: '',
-    });
+    const [formData, setFormData] = useState([])
 
 
     const handleChange = (e) => {
@@ -39,13 +38,7 @@ function Search() {
                 <button type="submit">Search</button>
             </form>
             <div>
-                {movies.length > 0 ? (
-                    movies.map(movie => (
-                        <p>{movie.title}</p>
-                    ))
-                ) : (
-                    <p>No movies found</p>
-                )}
+                <MovieList movies={movies} />
             </div>
         </div>
 
