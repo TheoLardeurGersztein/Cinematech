@@ -9,6 +9,7 @@ import Contact from './contact'
 import Library from './library'
 import Search from './search'
 import Discover from "./discover";
+import MovieDetails from "./MovieDetails";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/search" element={<Search />} />
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/details" element={<MovieDetails />} />
             </Routes>
         </Router>
     );
