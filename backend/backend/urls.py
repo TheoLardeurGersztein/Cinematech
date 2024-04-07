@@ -29,5 +29,6 @@ urlpatterns = [
     path('api/search/', views.SearchMovies.as_view()),
     path('api/discover/', views.DiscoverMovies.as_view()),
     path('movies/', include("media_management.urls")),
+    path('api/torrent/', views.TorrentList.as_view()),
     path('admin/', admin.site.urls),
 ]
