@@ -14,3 +14,8 @@ export const searchMovieAPI = (title) => {
 export const dicoverMoviesAPI = () => {
   return axios.get(api_url + "discover/")
 }
+
+
+export const torrentListAPI = (title, year) => {
+  return axios.get(api_url + "torrent/?title=" + title + "&year=" + year)
+}

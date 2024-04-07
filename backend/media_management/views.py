@@ -9,8 +9,7 @@ from rest_framework.response import Response
 from .models import Movie
 from .serializers import MovieSerializer
 from .tmdb_API import list_movies, discover_movies
-
-
+from .torrent_API import torrent_list
 
 
 def index(request):
@@ -40,3 +39,18 @@ class DiscoverMovies(generics.ListAPIView):
         return Response(data)
 
 
+
+
+class TorrentList(generics.ListAPIView):
+
+    def get_queryset(self):
+        title = self.request.query_params.get('title', '')
+        year = self.request.query_params.get('year', '')
+        return torrent_list(title, year)
+
+    def list(self, request, *args, **kwargs):
+        title = self.request.GET.get('title', '')
+        year = self.request.GET.get('year', '')
+        data = torrent_list(title, year)
+        print(data)
+        return Response(data)
