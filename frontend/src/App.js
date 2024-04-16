@@ -10,6 +10,7 @@ import Library from './library'
 import Search from './search'
 import Discover from "./discover";
 import MovieDetails from "./MovieDetails";
+import Downloads from "./Downloads";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/details" element={<MovieDetails />} />
+                <Route path="/downloads" element={<Downloads />} />
             </Routes>
         </Router>
     );
@@ -30,7 +32,7 @@ function App() {
 function Header() {
     return (
         <header className="App-header">
-            <h2 className="title">Cinematech</h2>
+            <h1 className="title">Cinematech</h1>
             <nav className="menu">
                 <ul className="menu">
                     <li><Link to="/">Home</Link></li>
@@ -38,6 +40,7 @@ function Header() {
                     <li><Link to="/search">Search</Link></li>
                     <li><Link to="/discover">Discover</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
+                    <li><Link to="/downloads">Downloads</Link></li>
                 </ul>
             </nav>
         </header>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { dicoverMoviesAPI } from './api';
 import MovieList from './movieCard';
-import './library.css';
 
 function Discover() {
   const [movies, setMovies] = useState([]);

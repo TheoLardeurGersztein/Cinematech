@@ -1,0 +1,41 @@
+
+.downloading-movie-table-container {
+    padding: 30px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.downloading-movie-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.downloading-movie-table-container th,
+.downloading-movie-table-container td {
+  padding: 8px;
+  text-align: left;
+}
+
+.downloading-movie-table-container th {
+  background-color: rgba(106, 27, 154, 0.2); /* Purple background */
+  color: #fff; /* White text color */
+}
+
+.downloading-movie-table-container td {
+  background-color: rgba(156, 39, 176, 0.1); /* Darker purple background */
+  color: #fff; /* White text color */
+}
+
+.downloading-movie-table-container td span {
+  cursor: pointer;
+  margin-right: 10px; /* Spacing between span and link */
+}
+
+.downloading-movie-table-container td a {
+  color: #fff; /* White link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.downloading-movie-table-container td a:hover {
+  text-decoration: underline; /* Underline on hover */
+}

@@ -1,46 +1,52 @@
-* { border: 1px solid black; }
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
 
-
-.App {
-  text-align: center;
+h1 {
+  font-size: 60px;
 }
 
 
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111; /* Dark background color */
+    color: #fff; /* Text color */
+    font-size: 25px;
 }
+
+/* Header styles */
 .App-header {
-  display: grid;
-  grid-template-columns: 1fr; /* Single column */
-  grid-template-rows: auto auto; /* Two rows */
-  align-items: center; /* Center items vertically */
+    background-color: #222; /* Darker background for header */
+    padding: 20px;
+    font-size: 16px;
 }
 
 .title {
-  grid-row: 1; /* Position title in the first row */
-  justify-self: start; /* Align title to the start of its column */
+    color: #9c27b0; /* Purple color for title */
+    font-size: 36px; /* Bigger font size for title */
+    margin-bottom: 20px;
 }
 
 .menu {
-  grid-row: 2; /* Position menu in the second row */
+    list-style-type: none;
+    text-align: left; /* Align menu items to the left */
 }
 
-.menu ul {
-  list-style-type: none;
-  padding: 0;
+.menu li {
+    display: inline-block;
+    margin-right: 20px;
 }
 
-.menu ul li {
-  display: inline;
-  margin-right: 10px;
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.menu ul li:last-child {
-  margin-right: 0; /* Remove margin from last item */
+.menu li a:hover {
+    color: #9c27b0; /* Purple color on hover */
 }

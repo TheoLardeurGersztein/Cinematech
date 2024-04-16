@@ -1,6 +1,9 @@
-import {useLocation, useNavigate} from 'react-router-dom';
-import {torrentListAPI} from "./api";
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {downloadMovie, torrentListAPI} from "./api";
 import {useEffect, useState} from "react";
+
+
+import './MovieDetails.css'
 
 function MovieDetails() {
 
@@ -26,40 +29,81 @@ function MovieDetails() {
     const {movie} = location.state
 
     return (
-        <div>
-            <h1>{movie.title}</h1>
-            <p>{movie.release_date}</p>
 
-            <p>{movie.synopsis}</p>
-            <div>
-                <img src={movie.poster} alt={movie.title + " Poster"}/>
+
+        <div className="detailed-movie-container">
+
+
+            <div className="detailed-movie-info">
+
+                <div className="movie-details">
+                    <h1 className="movie-title">{movie.title}</h1>
+                    <p className="release-year">{movie.release_date}</p>
+                    <p>{movie.synopsis}</p>
+                </div>
+
+                <div className="movie-poster-container">
+                    <img className="movie-poster" src={movie.poster} alt={movie.title + " Poster"}/>
+                </div>
+
             </div>
-            <button onClick={handleGoBack}>Go back</button>
-            {loading ? (
-                <p>Loading in progress</p>
-                ) :
-                torrents.length > 0 ? (
-                <ul>
-                    {torrents.map((torrent, index) => (
-                        <li key={index}>
-                            title: {torrent.title},
-                            quality: {torrent.quality},
-                            seeds: {torrent.seeds},
-                            peers: {torrent.peers},
-                            size: {torrent.size},
-                            date_uploaded: {torrent.date_uploaded},
-                            url: {torrent.url},
-                            source: {torrent.source}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No torrents available</p>
-            )}
+
+            <div className="torrent-table">
+                {loading ? (
+                    <p>Loading in progress</p>
+                ) : torrents.length > 0 ? (
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Quality</th>
+                            <th>Seeds</th>
+                            <th>Peers</th>
+                            <th>Size</th>
+                            <th>Date Uploaded</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {torrents.map((torrent, index) => (
+                            <tr key={index}>
+                                <td>{torrent.title}</td>
+                                <td>{torrent.quality}</td>
+                                <td>{torrent.seeds}</td>
+                                <td>{torrent.peers}</td>
+                                <td>{torrent.size}</td>
+                                <td>{torrent.date_uploaded}</td>
+                                <td>
+                                    <img className="download-icon" src={"download-icon.png"} alt="Download"
+                                         onClick={() => downloadMovie(
+                                             {
+                                                 'movie': movie,
+                                                 'download': {
+                                                     'title' : movie.title,
+                                                     'url': torrent.url,
+                                                     'hash': torrent.hash
+                                                 }
+                                             }
+                                         )}/>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No torrents available</p>
+                )}
+            </div>
+
+
+            <div className="button-container">
+                <button className="button" onClick={handleGoBack}>Go back</button>
+            </div>
 
         </div>
 
-    );
+    )
+        ;
 }
 
 export default MovieDetails

@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { getMoviesAPI } from './api';
-import axios from 'axios';
-import './library.css';
+import React, {useState, useEffect} from 'react';
+import {getMoviesAPI} from './api';
+import MovieList from "./movieCard";
 
 function Library() {
-  const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    getMovies();
-  }, []);
+    useEffect(() => {
+        getMovies();
+    }, []);
 
-  function getMovies() {
-    getMoviesAPI()
-        .then(res => {
-        const moviesData = res.data;
-        setMovies(moviesData);
-      })
-  }
+    function getMovies() {
+        getMoviesAPI()
+            .then(res => {
+                const moviesData = res.data;
+                setMovies(moviesData);
+            })
+    }
 
-  return (
-    <div>
-      {movies.map(movie => (
-        <p key={movie.id}>{movie.title}</p>
-      ))}
-    </div>
-  );
+    return (
+        <div>
+            <MovieList movies={movies}/>
+        </div>
+    );
 }
 
 export default Library;
