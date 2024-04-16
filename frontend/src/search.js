@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {searchMovieAPI} from "./api";
 import MovieList from "./movieCard";
 
+import "./search.css"
+
 
 function Search() {
 
@@ -25,24 +27,23 @@ function Search() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Tite:
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                    />
-                </label>
+            <form className="search-form" onSubmit={handleSubmit}>
+                <label htmlFor="title_movie">Title </label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                />
                 <button type="submit">Search</button>
-            </form>
-            <div>
-                <MovieList movies={movies} />
-            </div>
-        </div>
+        </form>
+    <div>
+        <MovieList movies={movies}/>
+    </div>
+</div>
 
-    )
+)
 }
 
 

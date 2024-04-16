@@ -1,0 +1,41 @@
+/* Search form */
+.search-form {
+  margin-bottom: 20px; /* Space between search form and subsequent content */
+  margin-top: 20px;
+}
+
+.search-form label {
+  font-size: 1.2rem;
+  color: #fff; /* Text color */
+}
+
+.search-form input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #9c27b0; /* Purple border color */
+  border-radius: 5px;
+  background-color: #222; /* Dark background color */
+  color: #fff; /* Text color */
+  width: 200px; /* Adjust width as needed */
+}
+
+.search-form input[type="text"]:focus {
+  outline: none;
+  border-color: #9c27b0; /* Purple border color on focus */
+}
+
+.search-form button {
+  margin-left: 10px; /* Space between input field and button */
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #9c27b0; /* Purple background color */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #7b1fa2; /* Darker purple on hover */
+}
+

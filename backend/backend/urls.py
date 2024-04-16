@@ -23,12 +23,19 @@ from media_management import views
 
 router = routers.DefaultRouter()
 router.register(r'lib', views.LibraryMovies)
+router.register(r'downloads', views.DownloadingMovies)
+
 
 urlpatterns = [
+    path('movies/', include("media_management.urls")),
+    path('admin/', admin.site.urls),
+
     path('api/', include(router.urls)),
     path('api/search/', views.SearchMovies.as_view()),
     path('api/discover/', views.DiscoverMovies.as_view()),
-    path('movies/', include("media_management.urls")),
     path('api/torrent/', views.TorrentList.as_view()),
-    path('admin/', admin.site.urls),
+
+
 ]
+
+
