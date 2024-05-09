@@ -11,9 +11,9 @@ function MovieCard({movie}) {
         if (pathname === "/discover" || pathname === "/search") {
             // Send to details page with movie object
             navigate("/details", {state: {movie}});
-        } else if (pathname === "/movies") {
+        } else if (pathname === "/lib") {
             // Redirect to movie details page with id
-            navigate(`/movies/${movie.id}`);
+            navigate(`/movies/${movie.id}`, {state: {movie}});
         } else if (pathname === "/downloadingMovies") {
             // Redirect to downloading movie details page with id
             navigate(`/downloadingMovies/${movie.id}`);
