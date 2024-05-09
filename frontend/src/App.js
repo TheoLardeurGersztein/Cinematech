@@ -4,26 +4,28 @@ import {
     Route,
 } from "react-router-dom";
 import './App.css';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Contact from './contact'
 import Library from './library'
 import Search from './search'
 import Discover from "./discover";
 import MovieDetails from "./MovieDetails";
 import Downloads from "./Downloads";
+import MovieViewer from "./MovieViewer"
 
 function App() {
     return (
         <Router>
-            <Header />
+            <Header/>
             <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route path="/lib" element={<Library />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/discover" element={<Discover />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/details" element={<MovieDetails />} />
-                <Route path="/downloads" element={<Downloads />} />
+                <Route exact path="/" element={<Home/>}/>
+                <Route path="/lib" element={<Library/>}/>
+                <Route path="/search" element={<Search/>}/>
+                <Route path="/discover" element={<Discover/>}/>
+                <Route path="/contact" element={<Contact/>}/>
+                <Route path="/details" element={<MovieDetails/>}/>
+                <Route path="/downloads" element={<Downloads/>}/>
+                <Route path="/movies/:id" element={<MovieViewer/>}/>
             </Routes>
         </Router>
     );
@@ -54,8 +56,6 @@ function Home() {
         </div>
     );
 }
-
-
 
 
 export default App;
