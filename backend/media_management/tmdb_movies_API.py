@@ -34,7 +34,7 @@ def discover_movies():
     else:
         return None
 
-def list_movies(title):
+def search_movies(title):
     response = requests.get(f"{api_url_base}search/movie?query={title}&page=1", headers=header)
     new_data = treat_response(response)
     if response.status_code == 200:
