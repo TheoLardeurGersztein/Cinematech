@@ -10,9 +10,8 @@
     width: 80%;
     max-width: 800px;
     height: auto;
-    border: 5px solid #7d49ff; /* Violet border */
     border-radius: 10px;
-    background-color: #1e1e1e; /* Dark background for video */
+    background-color: black; /* Sets the background color to black */
 }
 
 

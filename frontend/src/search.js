@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {searchMovieAPI} from "./api";
+import React, {useEffect, useState} from 'react';
+import {getMoviesAPI, getSeriesListAPI, searchMovieAPI, searchSeriesAPI} from "./api";
 import MovieList from "./movieCard";
 
 import "./search.css"
@@ -7,9 +7,9 @@ import "./search.css"
 
 function Search() {
 
-    const [movies, setMovies] = useState([]);
     const [formData, setFormData] = useState([])
-
+    const [media, setMedia] = useState([]);
+    const [category, setCategory] = useState('movies'); // Default category is movies
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -18,15 +18,28 @@ function Search() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        searchMovieAPI(formData.title)
-            .then(response => {
-                setMovies(response.data);
-            })
+        if (category === 'movies') {
+            searchMovieAPI(formData.title)
+                .then(res => {
+                    const moviesData = res.data;
+                    setMedia(moviesData);
+                })
+        } else if (category === 'series') {
+            searchSeriesAPI(formData.title) // Assuming you have a function to fetch TV shows data
+                .then(res => {
+                    const tvShowsData = res.data;
+                    setMedia(tvShowsData);
+                })
+        }
     };
 
 
     return (
         <div>
+            <div>
+                <button onClick={() => setCategory('movies')}>Movies</button>
+                <button onClick={() => setCategory('series')}>Series</button>
+            </div>
             <form className="search-form" onSubmit={handleSubmit}>
                 <label htmlFor="title_movie">Title </label>
                 <input
@@ -37,13 +50,13 @@ function Search() {
                     onChange={handleChange}
                 />
                 <button type="submit">Search</button>
-        </form>
-    <div>
-        <MovieList movies={movies}/>
-    </div>
-</div>
+            </form>
+            <div>
+                <MovieList movies={media} mediatype={category}/>
+            </div>
+        </div>
 
-)
+    )
 }
 
 

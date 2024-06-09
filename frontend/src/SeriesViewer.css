@@ -1,0 +1,86 @@
+
+
+body {
+    background-color: #121212;
+    color: #E0E0E0;
+    font-family: 'Arial', sans-serif;
+}
+
+.series-viewer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.movie-viewer-container {
+        flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.movie-player {
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.details-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.season-selector {
+    margin: 20px;
+    text-align: center;
+}
+
+
+.season-selector label {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #7C4DFF;
+}
+
+.season-selector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #7C4DFF;
+    background-color: #1E1E1E;
+    color: #E0E0E0;
+}
+
+.episode-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.episode-list li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #2C2C2C;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.episode-list li:hover {
+    background-color: #7C4DFF;
+    transform: translateY(-2px);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 24px;
+    color: #7C4DFF;
+}

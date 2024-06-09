@@ -22,20 +22,19 @@ from rest_framework import routers
 from media_management import views
 
 router = routers.DefaultRouter()
-router.register(r'lib', views.LibraryMovies)
+router.register(r'lib/movies', views.LibraryMovies)
+router.register(r'lib/series', views.LibrarySeries)
 router.register(r'downloads', views.DownloadingMovies)
 
-
 urlpatterns = [
-    path('movies/', include("media_management.urls")),
     path('admin/', admin.site.urls),
-
     path('api/', include(router.urls)),
-    path('api/search/', views.SearchMovies.as_view()),
-    path('api/discover/', views.DiscoverMovies.as_view()),
+
+    path('api/movies/search/', views.SearchMovies.as_view()),
+    path('api/movies/discover/', views.DiscoverMovies.as_view()),
+    path('api/series/search/', views.SearchSeries.as_view()),
+    path('api/series/discover/', views.DiscoverSeries.as_view()),
+    path('api/tmdb/series/<int:pk>/', views.TmbdSeries.as_view()),
     path('api/torrent/', views.TorrentList.as_view()),
 
-
 ]
-
-
