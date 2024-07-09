@@ -19,22 +19,35 @@ from django.urls import path
 from django.urls import include
 from rest_framework import routers
 
-from media_management import views
+
+
+from media_management import views as media_management_views
+from profiles import views as profiles_view
+from accounts import views as accounts_view
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = routers.DefaultRouter()
-router.register(r'lib/movies', views.LibraryMovies)
-router.register(r'lib/series', views.LibrarySeries)
-router.register(r'downloads', views.DownloadingMovies)
+router.register(r'lib/movies', media_management_views.LibraryMovies)
+router.register(r'lib/series', media_management_views.LibrarySeries)
+router.register(r'downloads', media_management_views.DownloadingMovies)
+router.register(r'profiles', profiles_view.ProfilesView)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
 
-    path('api/movies/search/', views.SearchMovies.as_view()),
-    path('api/movies/discover/', views.DiscoverMovies.as_view()),
-    path('api/series/search/', views.SearchSeries.as_view()),
-    path('api/series/discover/', views.DiscoverSeries.as_view()),
-    path('api/tmdb/series/<int:pk>/', views.TmbdSeries.as_view()),
-    path('api/torrent/', views.TorrentList.as_view()),
+    path('api/movies/search/', media_management_views.SearchMovies.as_view()),
+    path('api/movies/discover/', media_management_views.DiscoverMovies.as_view()),
+    path('api/series/search/', media_management_views.SearchSeries.as_view()),
+    path('api/series/discover/', media_management_views.DiscoverSeries.as_view()),
+    path('api/tmdb/series/<int:pk>/',    media_management_views.TmbdSeries.as_view()),
+    path('api/torrent/', media_management_views.TorrentList.as_view()),
+
+    path('api/account/info/', accounts_view.AccountInfoView.as_view(), name='account_info'),
+    path('api/account/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/account/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    path('api/account/profiles/', profiles_view.ProfileListView.as_view(), name='profile-list'),
 
 ]
