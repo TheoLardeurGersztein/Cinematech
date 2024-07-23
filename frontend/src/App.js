@@ -5,21 +5,20 @@ import {
 } from "react-router-dom";
 import './App.css';
 import {Link} from 'react-router-dom';
-import Contact from './contact'
-import Library from './library'
-import Search from './search'
-import Discover from "./discover";
-import MovieDetails from "./MovieDetails";
-import Downloads from "./Downloads";
-import MovieViewer from "./MovieViewer"
-import Series from "./Series";
-import SeriesViewer from "./SeriesViewer";
-import SeriesDetails from "./SeriesDetails";
-import Login from "./Login";
+import Contact from './Contact/Contact'
+import Library from './Media/Library'
+import Search from './Media/Search'
+import Discover from "./Media/Discover";
+import MovieDetails from "./Media/MovieDetails";
+import Downloads from "./Media/Downloads";
+import MovieViewer from "./Media/MovieViewer"
+import SeriesViewer from "./Media/SeriesViewer";
+import SeriesDetails from "./Media/SeriesDetails";
+import Login from "./AccountsProfiles/Login";
 import {useEffect, useState} from "react";
 import {getAccountInfoAPI, getProfileInfoAPI, logout} from "./api";
-import Profile from "./Profile";
-import AddProfile from "./AddProfile";
+import Profile from "./AccountsProfiles/Profile";
+import AddProfile from "./AccountsProfiles/AddProfile";
 
 function App() {
     return (

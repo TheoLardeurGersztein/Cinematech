@@ -18,27 +18,38 @@ from media_management.tmdb_movies_API import search_movies
 
 def updateMovies(directory):
 
-    regex = r'^(.*?)\s\((\d{4})\)'
+    movie_regex = r'^(.*?)(\d{4})'
+    #To not count files starting with .
+    point_regex = r'^\..*'
+
 
     movie_files = os.listdir(directory)
     movies = []
     unsure = []
     not_fount = []
     mp4_not_found = []
-
     for file in movie_files:
-        match = re.search(regex, file)
-        if match:
-            movie_title = match.group(1)
-            release_year = match.group(2)
-            files_in_fodler = os.listdir(os.path.join(directory, file) )
-            for file_in_folder in files_in_fodler :
-                if file_in_folder.endswith('.mp4'):
-                    file_path = file + '/' +  file_in_folder
-                    print(file_path)
-                    movies.append((file_path, movie_title, release_year))
+        movie_match = re.search(movie_regex, file)
+        point_match = re.search(point_regex, file)
+        if point_match:
+            continue
+        if movie_match:
+            movie_title = movie_match.group(1)
+            release_year = movie_match.group(2)
+            if not release_year in ['1080', '2048', '4098', '8192'] :
+                movie_title_without_points = movie_title.replace('.', ' ')
+                files_in_fodler = os.listdir(os.path.join(directory, file) )
+                for file_in_folder in files_in_fodler :
+                    if file_in_folder.endswith('.mp4'):
+                        file_path = file + '/' +  file_in_folder
+                        movies.append((file_path, movie_title_without_points, release_year))
+            else:
+                not_fount.append(file)
         else:
             not_fount.append(file)
+
+
+    #movies = [('Fantastic Mr Fox (2009) [1080p]/Fantastic.Mr.Fox.2009.1080p.BrRip.x264.YIFY.mp4', 'Fantastic Mr Fox', '2009')]
 
     for movie in movies:
         possible_movies = []
@@ -48,7 +59,6 @@ def updateMovies(directory):
         if len(possible_movies) != 1:
             unsure.append(movie)
         if not Movie.objects.filter(title__iexact=movie[1]).exists():
-            print(movie[0])
             entry = Movie(
                 **possible_movies[0],
                 file_path=movie[0])
@@ -56,7 +66,6 @@ def updateMovies(directory):
         else:
             print(movie[1], "already exists")
 
-    print("Movies")
     print("Unsure : ", [t[0] for t in unsure])
     print("Not found : ", not_fount)
 
@@ -65,8 +74,6 @@ def updateMovies(directory):
 def updateSeries(directory):
 
     regex = (r'S(\d+)E(\d+)')
-
-
 
     words_to_remove = [
         "Season",
@@ -166,11 +173,9 @@ def updateSeries(directory):
 
         if not Series.objects.filter(tmdb_id=tmdb_series_id).exists():
             series_data = get_series_from_tmdb_id(tmdb_series_id)
-            print(series_data)
             serie_id = Series.objects.create(**series_data)
 
         if not serie_id:
-            print(series)
             serie_id = get_object_or_404(Series, tmdb_id=tmdb_series_id)
 
 
@@ -201,9 +206,9 @@ def updateSeries(directory):
 
 
 if __name__ == '__main__':
-    #movie_directory = "D:\Movies"
+    movie_directory = "D:\Movies"
     serie_directory = "D:\Series\\"
-    #updateMovies(movie_directory)
+    updateMovies(movie_directory)
     updateSeries(serie_directory)
 
 

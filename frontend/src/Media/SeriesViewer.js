@@ -1,6 +1,6 @@
-import {useLocation, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getMovieAPI, getSeriesAPI} from "./api";
+import {getSeriesAPI} from "../api";
 import "./SeriesViewer.css"
 
 

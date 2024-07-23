@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {addProfileAPI, getAccountIdAPI, getProfilesAPI} from "./api";
+import {addProfileAPI, getAccountIdAPI} from "../api";
 import {useNavigate} from "react-router-dom";
 
 function AddProfile() {
 
     const [name, setName] = useState('');
-
     const navigate = useNavigate();
 
     useEffect(() => {

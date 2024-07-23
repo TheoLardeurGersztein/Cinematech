@@ -7,9 +7,6 @@ class MovieSerializer(serializers.ModelSerializer):
         model = Movie
         fields = '__all__'
 
-
-
-
 class DownloadingMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Downloading_Movie
@@ -19,6 +16,7 @@ class SeriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Series
         fields = '__all__'
+
 class EpisodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Episode

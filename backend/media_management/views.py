@@ -13,15 +13,12 @@ from .torrent_API import torrent_list, yts_dowload_torrent
 
 import json
 
-
-
 def index(request):
     return HttpResponse("Lib movies - Not API related page")
 
 class LibraryMovies(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
-    lookup_field = 'id'
 
 class LibrarySeries(viewsets.ModelViewSet):
     queryset = Series.objects.all()
@@ -115,9 +112,7 @@ class TorrentList(generics.ListAPIView):
         data = torrent_list(title, year)
         return Response(data)
 
-class LibraryMovies(viewsets.ModelViewSet):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+
 
 
 class TmbdSeries(generics.ListAPIView):

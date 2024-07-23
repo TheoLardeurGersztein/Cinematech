@@ -1,5 +1,5 @@
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {dicoverMoviesAPI, downloadMovie, getSeriesAPI, getSeriesTmdbAPI, torrentListAPI} from "./api";
+import {useLocation, useNavigate} from 'react-router-dom';
+import {getSeriesTmdbAPI} from "../api";
 import {useEffect, useState} from "react";
 
 

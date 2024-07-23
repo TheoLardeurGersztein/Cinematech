@@ -1,0 +1,24 @@
+.button-container {
+    margin: 20px 0; /* Space around the button container */
+}
+
+.category-button {
+    background-color: purple; /* Purple background for the buttons */
+    color: white; /* White text color for the buttons */
+    border: none;
+    padding: 10px 20px; /* Padding inside the buttons */
+    margin: 5px; /* Space between buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for the button text */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.category-button:hover {
+    background-color: darkviolet; /* Darker purple on hover */
+}
+
+.category-button.active {
+    background-color: darkviolet; /* Darker purple for the active button */
+    font-weight: bold; /* Bold text for the active button */
+}

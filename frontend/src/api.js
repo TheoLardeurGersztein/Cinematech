@@ -53,7 +53,7 @@ export const getSeriesTmdbAPI = (seriesId) => {
 }
 
 export const getAccountToken = async (body) => {
-    const response = await axios.post('http://127.0.0.1:8000/api/' + "account/token/", body)
+    const response = await axios.post(api_url + "account/token/", body)
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     localStorage.removeItem('selectedProfile');
@@ -62,7 +62,7 @@ export const getAccountToken = async (body) => {
 
 export const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem('refresh_token');
-    const response = await axios.post('http://127.0.0.1:8000/api/' + "account/token/refresh/", {refresh: refreshToken})
+    const response = await axios.post(api_url + "account/token/refresh/", {refresh: refreshToken})
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
@@ -75,13 +75,11 @@ export const logout = () => {
     localStorage.removeItem('selectedProfile');
 };
 
-
 export const getAccountInfoAPI = async () => {
     try {
         const response = await axiosInstance.get(api_url + "account/info/");
         return response.data;
     } catch (error) {
-        console.log(error)
         if (error.response) {
             return null
         } else {
@@ -126,7 +124,7 @@ export const setProfile = (profileId) => {
 }
 
 export const addProfileAPI = async (name) => {
-    const response = await axiosInstance.post('http://127.0.0.1:8000/api/' + "profiles/", {
+    const response = await axiosInstance.post(api_url + "profiles/", {
         name: name
     })
     console.log(response)

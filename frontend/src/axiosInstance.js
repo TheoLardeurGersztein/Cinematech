@@ -35,8 +35,8 @@ axiosInstance.interceptors.response.use(
                 return axiosInstance(originalRequest); // Retry the original request with the new access token.
             } catch (refreshError) {
                 console.error('Token refresh failed:', refreshError);
-                //localStorage.removeItem('accessToken');
-                //localStorage.removeItem('refreshToken');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
                 return Promise.reject(refreshError);
             }
         }

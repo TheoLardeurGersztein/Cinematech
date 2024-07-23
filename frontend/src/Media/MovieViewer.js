@@ -1,6 +1,6 @@
 import "./MovieViewer.css";
 import {useEffect, useState} from "react";
-import {getMovieAPI} from "./api";
+import {getMovieAPI} from "../api";
 import {useParams} from "react-router-dom";
 
 function MovieViewer() {
