@@ -1,6 +1,5 @@
-import MovieList from "./movieCard";
 import React, {useEffect, useState} from "react";
-import {downloadingMoviesAPI} from "./api";
+import {downloadingMoviesAPI} from "../api";
 import './Downloads.css'
 
 

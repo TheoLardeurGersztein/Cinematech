@@ -1,11 +1,10 @@
-import contact from "./345614141_603315041534774_4573198782589312240_n.jpg";
-import './contact.css'
+import './Contact.css'
 
 function Contact() {
     return (
         <div className="text-and-picture">
             <div className="round-picture-container">
-                <img src={contact} className="round-picture"/>
+                <img src={"345614141_603315041534774_4573198782589312240_n.jpg"} className="round-picture"/>
             </div>
             <div>
                 <h3>Théo Lardeur Gersztein</h3>

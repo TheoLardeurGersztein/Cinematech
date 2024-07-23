@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {getAccountIdAPI, getProfilesAPI, setProfile} from "./api";
+import {getAccountIdAPI, getProfilesAPI, setProfile} from "../api";
 import {useNavigate} from "react-router-dom";
 import './Profile.css';
 
@@ -19,14 +19,12 @@ function ProfileSelection() {
             }
             setAccountId(accountResponse)
             const response = await getProfilesAPI(accountId)
-            console.log(response)
             setProfiles(response.data)
         };
         fetchProfiles();
     }, [accountId]);
 
     const handleSelectProfile = (profileId) => {
-        // Save the selected profile to local storage
         setProfile(profileId);
         navigate('/lib');
 

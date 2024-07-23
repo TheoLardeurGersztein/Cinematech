@@ -1,11 +1,11 @@
 from django.db import models
 
-
 class Genre(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
 
 class Movie(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
@@ -55,9 +55,9 @@ class Series(models.Model):
         verbose_name = "Series"
         verbose_name_plural = "Series"
 
-
     def __str__(self):
         return self.title
+
 
 class Episode(models.Model):
     title = models.CharField(max_length=255)

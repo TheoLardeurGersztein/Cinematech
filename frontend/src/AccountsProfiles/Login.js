@@ -1,7 +1,6 @@
-// Login.js
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {getAccountInfoAPI, getAccountToken} from "./api";
+import {getAccountToken} from "../api";
 import './Login.css';
 
 

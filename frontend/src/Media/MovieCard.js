@@ -1,6 +1,5 @@
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import './movieCard.css'
-import series from "./Series";
+import {useLocation, useNavigate} from "react-router-dom";
+import './MovieCard.css'
 
 function MovieCard({movie, mediaType}) {
 
@@ -40,7 +39,7 @@ function MovieCard({movie, mediaType}) {
 
 function MovieList({movies, mediatype: mediaType}) {
 
-    console.log(movies)
+    //console.log(movies)
     return (
         <div className="movie-container">
             {movies.map(movie => (

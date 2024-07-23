@@ -1,6 +1,4 @@
-from django.contrib import admin
-
-from .models import Movie, Genre, Downloading_Movie, Series, Episode
+from .models import Movie, Genre, Downloading_Movie
 
 from django.contrib import admin
 from .models import Series, Episode

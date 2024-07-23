@@ -1,6 +1,5 @@
 import requests
 
-
 yts_url = "https://yts.mx/api/v2/"
 yts_magnet = "magnet:?xt=urn:btih:"
 tracker_url = "udp://tracker.openbittorrent.com:80"
@@ -18,6 +17,7 @@ def yts_treat_response(title, response):
         'source': 'yts'
     } for item in response.json()['data']['movie']['torrents']]
     return new_data
+
 
 def yts_torrent_list(title, release_date):
     year = release_date[:4:]

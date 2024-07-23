@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {getSeriesListAPI} from './api';
-import MovieList from "./movieCard";
+import {getSeriesListAPI} from '../api';
+import MovieList from "./MovieCard";
 
 function Series() {
     const [series, setSeries] = useState([]);
