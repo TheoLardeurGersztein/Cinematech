@@ -1,7 +1,7 @@
 import {
     BrowserRouter as Router,
     Routes,
-    Route, useLocation,
+    Route, useLocation, useNavigate,
 } from "react-router-dom";
 import './App.css';
 import {Link} from 'react-router-dom';
@@ -15,7 +15,7 @@ import MovieViewer from "./Media/MovieViewer"
 import SeriesViewer from "./Media/SeriesViewer";
 import SeriesDetails from "./Media/SeriesDetails";
 import Login from "./AccountsProfiles/Login";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getAccountInfoAPI, getProfileInfoAPI, logout} from "./api";
 import Profile from "./AccountsProfiles/Profile";
 import AddProfile from "./AccountsProfiles/AddProfile";
@@ -48,7 +48,13 @@ function App() {
 function Header() {
     const [accountInfo, setAccountInfo] = useState(null);
     const [profileInfo, setProfileInfo] = useState(null);
+    const [isToolbarVisible, setToolbarVisible] = useState(false);
+
     const location = useLocation();
+    let navigate = useNavigate();
+
+    const toolbarRef = useRef(null);
+
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -68,18 +74,76 @@ function Header() {
         fetchUserInfo();
     }, [location]);
 
+    useEffect(() => {
+        setToolbarVisible(false);
+    }, [location]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            console.log("hello")
+            if (toolbarRef.current && !toolbarRef.current.contains(event.target)) {
+                setToolbarVisible(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+
+    const toggleToolbar = () => {
+        setToolbarVisible(!isToolbarVisible);
+    };
+
     const handleLogout = () => {
         logout();
+    };
+
+    const handleLogin = () => {
+        navigate(`/`);
     };
 
 
     return (
         <header className="App-header">
-            <h1 className="title">Cinematech</h1>
-            <h4>{accountInfo && <p>Welcome, {accountInfo.username}</p>}</h4>
-            <h4>{profileInfo && <p>Welcome, {profileInfo.name}</p>}</h4>
+            <div className="header-left">
+                <img
+                    src="list.png"
+                    alt="Logo"
+                    className="logo"
+                    onClick={toggleToolbar}
 
-            <nav className="menu">
+                />
+                <h1 className="title">Cinematech</h1>
+            </div>
+
+            <div className="header-right">
+                <p>
+                    {accountInfo?.username}
+                    {accountInfo?.username && profileInfo?.name && ', '}
+                    {profileInfo?.name}
+                </p>
+                <img
+                    src="user.png"
+                    className="logo"
+                    onClick={handleLogin}
+                />
+            </div>
+
+
+            <nav className={`toolbar ${isToolbarVisible ? 'visible' : ''}`} ref={toolbarRef}>
+                <div className="header-left">
+                    <img
+                        src="list.png"
+                        alt="Logo"
+                        className="logo"
+                        onClick={toggleToolbar}
+                    />
+                    <h1 className="title">Cinematech</h1>
+                </div>
+
                 <ul className="menu">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/lib">My Library</Link></li>
@@ -96,6 +160,8 @@ function Header() {
 
                 </ul>
             </nav>
+
+
         </header>
     );
 }

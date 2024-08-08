@@ -5,10 +5,8 @@ body, h1, h2, h3, p, ul, li {
 }
 
 h1 {
-  font-size: 60px;
+    font-size: 60px;
 }
-
-
 
 /* Global styles */
 body {
@@ -20,9 +18,11 @@ body {
 
 /* Header styles */
 .App-header {
+    display: flex;
     background-color: #222; /* Darker background for header */
     padding: 20px;
     font-size: 16px;
+    justify-content: space-between
 }
 
 .title {
@@ -31,22 +31,69 @@ body {
     margin-bottom: 20px;
 }
 
-.menu {
+
+.header-left {
+    display: flex;
+}
+
+
+.logo {
+    cursor: pointer;
+    margin-right: 10px;
+    width: 40px; /* Set the desired width */
+    height: 40px; /* Set the desired height */
+    object-fit: contain; /* Ensures the image keeps its aspect ratio */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right p {
+    margin-right: 10px;
+}
+
+
+.welcome-container {
+    padding-right: 20px;
+}
+
+.toolbar {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    font-size: 20px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.toolbar {
+    transform: translateX(-100%);
+    position: absolute;
+    z-index: 1000;
+}
+
+.toolbar.visible {
+    transform: translate(0);
+}
+
+.toolbar ul {
     list-style-type: none;
-    text-align: left; /* Align menu items to the left */
+    padding: 20px;
 }
 
-.menu li {
-    display: inline-block;
-    margin-right: 20px;
+.toolbar ul li {
+    margin-bottom: 10px;
 }
 
-.menu li a {
-    color: #fff;
+.toolbar ul li a {
+    color: white;
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.menu li a:hover {
-    color: #9c27b0; /* Purple color on hover */
 }
