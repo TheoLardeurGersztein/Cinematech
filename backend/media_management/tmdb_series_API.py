@@ -13,11 +13,12 @@ header = {
  }
 
 def treat_list_series_response(response) :
+    genres_ids = [genre['id'] for genre in response.json()['results']]
     new_data = [{
         'title': item['name'],
         'tmdb_id' : item['id'],
         'poster': image_url + str(item['poster_path']) if item['poster_path'] is not None else default_image_url,
-        #'genre_ids': item['genre_ids'], # TODO Implement Genres
+        'genres_ids': genres_ids,
         'original_language': item['original_language'],
         'synopsis': item['overview'],
         'first_air_date': item['first_air_date']
@@ -26,13 +27,14 @@ def treat_list_series_response(response) :
 
 def treat_detailed_series_response(response) :
     data = response.json()
+    genres_ids = [genre['id'] for genre in data['genres']]
     new_data = {
         'title': data['name'],
         'tmdb_id' : data['id'],
         'number_of_episodes' : data['number_of_episodes'],
         'number_of_seasons' : data['number_of_seasons'],
         'poster': image_url + str(data['poster_path']) if data['poster_path'] is not None else default_image_url,
-        #'genre_ids': data['genre_ids'], # TODO Implement Genres
+        'genres_ids': genres_ids,
         'original_language': data['original_language'],
         'country_of_origin' : data['origin_country'],
         'synopsis': data['overview'],
@@ -63,6 +65,8 @@ def search_series(title):
     else:
         return None
 
+
+
 def get_series_from_tmdb_id(id):
     response = requests.get(f"{api_url_base}tv/{id}?language=en-US", headers=header)
     new_data = treat_detailed_series_response(response)
@@ -73,7 +77,6 @@ def get_series_from_tmdb_id(id):
 
 def get_episode_from_tmdb(season_number, episode_number, series_id) :
     response = requests.get(f"{api_url_base}tv/{series_id}/season/{season_number}/episode/{episode_number}?language=en-US", headers=header)
-    print(response.json())
     treat_episode_response(response)
     return
 

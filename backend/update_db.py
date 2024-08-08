@@ -1,91 +1,152 @@
 # This script is used for inserting movies from a file
 # in the django database without the need of calling the APIs
-
+import json
 import os
 import re
 import django
 
 from django.shortcuts import get_object_or_404
 
-from media_management.tmdb_series_API import get_series_id_from_title, get_episode_from_tmdb, get_series_from_tmdb_id
+from tmdb_genres_API import get_movie_genres_from_tmdb, get_series_genres_from_tmdb
+from utilsUpdateDB import get_info_movie_from_file_name, clean_up_file_path, get_info_episode_from_file_name
+from media_management.tmdb_series_API import get_series_id_from_title, get_series_from_tmdb_id, search_series
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 
-from media_management.models import Movie, Episode, Series
+from media_management.models import Movie, Episode, Series, MovieGenre, SeriesGenre
 from media_management.tmdb_movies_API import search_movies
 
 
 def updateMovies(directory):
 
-    movie_regex = r'^(.*?)(\d{4})'
-    #To not count files starting with .
-    point_regex = r'^\..*'
+    all_movie_file_names = os.listdir(directory)
+    movie_file_names = [file for file in all_movie_file_names if not file.startswith('.')]
 
-
-    movie_files = os.listdir(directory)
-    movies = []
-    unsure = []
+    no_release_year = []
     not_fount = []
-    mp4_not_found = []
-    for file in movie_files:
-        movie_match = re.search(movie_regex, file)
-        point_match = re.search(point_regex, file)
-        if point_match:
+    unsure = []
+    already_exists = []
+    added = []
+
+    for file_name in movie_file_names:
+        info = json.loads(get_info_movie_from_file_name(directory, file_name))
+        title = info['title']
+        release_year = info['release_year']
+        file_path = info['file_path']
+        duration = info['duration']
+
+        if not title:
+            not_fount.append(file_name)
             continue
-        if movie_match:
-            movie_title = movie_match.group(1)
-            release_year = movie_match.group(2)
-            if not release_year in ['1080', '2048', '4098', '8192'] :
-                movie_title_without_points = movie_title.replace('.', ' ')
-                files_in_fodler = os.listdir(os.path.join(directory, file) )
-                for file_in_folder in files_in_fodler :
-                    if file_in_folder.endswith('.mp4'):
-                        file_path = file + '/' +  file_in_folder
-                        movies.append((file_path, movie_title_without_points, release_year))
-            else:
-                not_fount.append(file)
-        else:
-            not_fount.append(file)
+        if not release_year:
+            no_release_year.append(file_name)
 
-
-    #movies = [('Fantastic Mr Fox (2009) [1080p]/Fantastic.Mr.Fox.2009.1080p.BrRip.x264.YIFY.mp4', 'Fantastic Mr Fox', '2009')]
-
-    for movie in movies:
         possible_movies = []
-        for possible_movie in search_movies(movie[1]):
-            if possible_movie['release_date'][:4:] == movie[2]:
+        for possible_movie in search_movies(title):
+            if possible_movie['release_date'][:4:] == release_year:
                 possible_movies.append(possible_movie)
         if len(possible_movies) != 1:
-            unsure.append(movie)
-        if not Movie.objects.filter(title__iexact=movie[1]).exists():
+            unsure.append(file_name)
+
+        if len(possible_movies) == 0:
+            not_fount.append(title)
+            continue
+        first_possible_movie = possible_movies[0]
+        if not Movie.objects.filter(file_path=file_path).exists():
+            genres = first_possible_movie['genres']
+            first_possible_movie.pop("genres")
             entry = Movie(
-                **possible_movies[0],
-                file_path=movie[0])
+                **first_possible_movie,
+                file_path=file_path,
+                duration=duration
+                )
+            print(genres)
+
             entry.save()
+            entry.genres.set(genres)
+            added.append(title)
         else:
-            print(movie[1], "already exists")
+            already_exists.append(title)
 
-    print("Unsure : ", [t[0] for t in unsure])
+
+    print("No release year : ", no_release_year)
     print("Not found : ", not_fount)
-
-
+    print("Unsure : ", unsure)
+    print("Already exists: ", already_exists)
+    print("Added : ", added)
 
 def updateSeries(directory):
 
-    regex = (r'S(\d+)E(\d+)')
+    all_series_file_names = os.listdir(directory)
+    movie_series_names = [file for file in all_series_file_names if not file.startswith('.')]
+    series_not_fount = []
+    episodes_not_fount = []
+    unsure = []
+    already_exists = []
+    added = []
+
+    for series in movie_series_names:
+
+        title_to_search = clean_up_file_path(series)
+        possible_series = search_series(title_to_search)
+        series_id = None
+
+        if len(possible_series) != 1:
+            unsure.append(series)
+        if len(possible_series) == 0:
+            series_not_fount.append(series)
+            continue
+
+        title = possible_series[0]['title']
+        if not Series.objects.filter(title=title).exists():
+            tmdb_series_id = get_series_id_from_title(title)
+            series_data = get_series_from_tmdb_id(tmdb_series_id)
+            genres = series_data['genres_ids']
+            series_data.pop("genres_ids")
+            series_instance = Series.objects.create(**series_data)
+            series_instance.genres.set(genres)
+            series_id = series_instance.id
+        else:
+            series_instance = Series.objects.get(title=title)
+            series_id = series_instance.id
+
+
+        for root, _, files in os.walk(os.path.join(directory, series)):
+            for file in files:
+                if file.startswith('.'):
+                    continue
+                info = json.loads(get_info_episode_from_file_name(root, file))
+                file_path = os.path.join(root, file).removeprefix(directory).replace("\\", "/")
+                season_number = info['season_number']
+                episode_number = info['episode_number']
+                duration = info['duration']
+
+                if not Episode.objects.filter(season_number=season_number, episode_number=episode_number,
+                                          series=series_id).exists():
+                    if series_id and season_number and episode_number:
+                        entry = Episode(
+                            season_number=season_number,
+                            episode_number=episode_number,
+                            file_path=file_path,
+                            duration=duration,
+                            series_id=series_id
+                        )
+                        entry.save()
+                        added.append(f"{title} - S{season_number}E{episode_number}")
+                    else:
+                        episodes_not_fount.append(file)
+                else:
+                    already_exists.append(f"{title} - S{season_number}E{episode_number}")
+
+
+    print("Series not found : ", series_not_fount)
+    print("Unsure series : ", unsure)
+    print("Episodes not found : ", episodes_not_fount)
+    print("Already exists : ", already_exists)
+    print("Added : ", added)
 
     words_to_remove = [
-        "Season",
-        "S[0-9]+",  # Match season numbers like S01, S02, etc.
-        "Episode",
-        "E[0-9]+",  # Match episode numbers like E01, E02, etc.
-        "1080p", "720p", "4K",
-        "BluRay", "DVD", "HD", "UHD", "DVDRip",
-        "HEVC", "x265", "x264",
-        "AAC", "AC3", "DTS", "Dolby",
-        "H264", "BONE", "DD5",
-        "[0-9]\.[0-9]",  # Match version numbers like 5.1, 7.1, etc.
         "Silence", "ESubs", "Subtitles",
         "English", "Spanish", "French",
         "Bitrate", "Quality", "Encoding",
@@ -130,85 +191,44 @@ def updateSeries(directory):
     ]
 
     patterns_to_remove = [
-        r'\(\d{4}\)',  # Remove years in parentheses like (1990)
-        r'\[[^\]]+\]',  # Remove anything inside square brackets like [i_c]
-        r'S\d{1,2}(-S\d{1,2})?',  # Remove season numbers like S01, S01-S02, etc.
-        r'E\d{1,2}(-E\d{1,2})?',  # Remove episode numbers like E01, E01-E02, etc.
-        r'\d+p',  # Remove video resolutions like 1080p, 720p, etc.
         r'\b\d{1,2}bit\b',  # Remove bit depth like 10bit, 8bit, etc.
         r'\b\d{1,2}\.\d{1,2}\b',  # Remove version numbers like 7.1, 5.1, etc.
-        r'-',  # Remove dashes
-        r'_',  # Remove underscores
-        r'\.',  # Remove dots
-        r'\.\.+',  # Remove consecutive dots
-        r'^\s+|\s+$',  # Remove leading and trailing spaces
-        r'\(',
-        r'\)',
-        r'[1-9]',
-        r'[Mm][Pp]4',
-        r'[Ww][Ee][Bb]'
     ]
 
-    series = []
+def updateMovieGenres():
+    data = get_movie_genres_from_tmdb()
+    for genre in data['genres']:
+        if not MovieGenre.objects.filter(name=genre['name']).exists():
+            entry = MovieGenre(
+                name=genre['name'],
+                id=genre['id']
+            )
+            entry.save()
 
-    raw_series = [folder for folder in os.listdir(directory) if os.path.isdir(os.path.join(directory, folder))]
-
-    for series in raw_series:
-
-        raw_serie = series
-        files_not_mapped = []
-
-        series = re.sub(r'\.', ' ', series)
-        for word in words_to_remove:
-            series = re.sub(r'\b' + word + r'\b', '', series, flags=re.IGNORECASE).strip()
-        for pattern in patterns_to_remove:
-            series = re.sub(pattern, ' ', series)
-            series = series.strip()
-        series = re.sub(r'  .*', '', series)
-
-        tmdb_series_id = get_series_id_from_title(series)
-
-        serie_episodes = []
-        serie_id = 0
-
-        if not Series.objects.filter(tmdb_id=tmdb_series_id).exists():
-            series_data = get_series_from_tmdb_id(tmdb_series_id)
-            serie_id = Series.objects.create(**series_data)
-
-        if not serie_id:
-            serie_id = get_object_or_404(Series, tmdb_id=tmdb_series_id)
-
-
-        #print(os.path.join(directory, serie))
-        for root, _, files in os.walk(os.path.join(directory, raw_serie)):
-            for file in files :
-                match = re.search(regex, file)
-                if match:
-                    season_number = int(match.group(1))
-                    episode_number = int(match.group(2))
-                    serie_episodes.append((season_number, episode_number, os.path.join(root, file).removeprefix(directory).replace("\\", "/")))
-                else :
-                    files_not_mapped.append(file)
-
-
-        for season_number, episode_number, file_path in serie_episodes:
-            if not Episode.objects.filter(season_number=season_number, episode_number=episode_number, series=serie_id).exists():
-                entry = Episode(
-                    series=serie_id,
-                    season_number=season_number,
-                    episode_number=episode_number,
-                    file_path=file_path
-                )
-                entry.save()
-
-
+def updateSeriesGenres():
+    data = get_series_genres_from_tmdb()
+    for genre in data['genres']:
+        if not SeriesGenre.objects.filter(name=genre['name']).exists():
+            entry = SeriesGenre(
+                name=genre['name'],
+                id=genre['id']
+            )
+            entry.save()
 
 
 
 if __name__ == '__main__':
+
     movie_directory = "D:\Movies"
     serie_directory = "D:\Series\\"
+
     updateMovies(movie_directory)
     updateSeries(serie_directory)
+
+    updateMovieGenres()
+    updateSeriesGenres()
+
+
+
 
 
