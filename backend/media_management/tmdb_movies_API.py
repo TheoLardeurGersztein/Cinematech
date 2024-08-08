@@ -16,7 +16,7 @@ def treat_response(response):
     new_data = [{
         'title': item['title'],
         'poster': image_url + str(item['poster_path']) if item['poster_path'] is not None else default_image_url,
-        #'genre_ids': item['genre_ids'], # TODO Implement Genres
+        'genres': item['genre_ids'],
         'original_language': item['original_language'],
         'synopsis': item['overview'],
         'release_date': item['release_date']
@@ -38,7 +38,6 @@ def search_movies(title):
         return new_data
     else:
         return None
-
 
 
 
