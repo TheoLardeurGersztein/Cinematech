@@ -21,39 +21,50 @@ import Profile from "./AccountsProfiles/Profile";
 import AddProfile from "./AccountsProfiles/AddProfile";
 
 function App() {
+    const [isToolbarVisible, setToolbarVisible] = useState(false);
+
+    const toggleToolbar = (isToolbarVisible) => {
+        setToolbarVisible(isToolbarVisible);
+    };
+
+
     return (
         <Router>
-            <Header/>
-            <Routes>
-                <Route exact path="/" element={<Login/>}/>
-                <Route exact path="/logout" element={<Login/>}/>
-                <Route exact path="/profiles" element={<Profile/>}/>
-                <Route exact path="/profiles/add" element={<AddProfile/>}/>
-                <Route path="/lib" element={<Library/>}/>
-                <Route path="/search" element={<Search/>}/>
-                <Route path="/discover" element={<Discover/>}/>
-                <Route path="/contact" element={<Contact/>}/>
-                <Route path="/search/movies/details" element={<MovieDetails/>}/>
-                <Route path="/search/series/details" element={<SeriesDetails/>}/>
-                <Route path="/discover/movies/details" element={<MovieDetails/>}/>
-                <Route path="/discover/series/details" element={<SeriesDetails/>}/>
-                <Route path="/downloads" element={<Downloads/>}/>
-                <Route path="/lib/movies/:id" element={<MovieViewer/>}/>
-                <Route path="/lib/series/:id" element={<SeriesViewer/>}/>
-            </Routes>
+            <Header toggleToolbar={toggleToolbar}/>
+            <Toolbar isToolbarVisible={isToolbarVisible} toggleToolbar={toggleToolbar}/>
+            <div className="main-content">
+
+                <Routes>
+                    <Route exact path="/" element={<Login/>}/>
+                    <Route exact path="/logout" element={<Login/>}/>
+                    <Route exact path="/profiles" element={<Profile/>}/>
+                    <Route exact path="/profiles/add" element={<AddProfile/>}/>
+                    <Route path="/lib" element={<Library/>}/>
+                    <Route path="/search" element={<Search/>}/>
+                    <Route path="/discover" element={<Discover/>}/>
+                    <Route path="/contact" element={<Contact/>}/>
+                    <Route path="/search/movies/details" element={<MovieDetails/>}/>
+                    <Route path="/search/series/details" element={<SeriesDetails/>}/>
+                    <Route path="/discover/movies/details" element={<MovieDetails/>}/>
+                    <Route path="/discover/series/details" element={<SeriesDetails/>}/>
+                    <Route path="/downloads" element={<Downloads/>}/>
+                    <Route path="/lib/movies/:id" element={<MovieViewer/>}/>
+                    <Route path="/lib/series/:id" element={<SeriesViewer/>}/>
+                </Routes>
+            </div>
+
         </Router>
     );
 }
 
-function Header() {
+function Toolbar({
+                     isToolbarVisible, toggleToolbar
+                 }) {
+
     const [accountInfo, setAccountInfo] = useState(null);
     const [profileInfo, setProfileInfo] = useState(null);
-    const [isToolbarVisible, setToolbarVisible] = useState(false);
-
-    const location = useLocation();
-    let navigate = useNavigate();
-
     const toolbarRef = useRef(null);
+    const location = useLocation();
 
 
     useEffect(() => {
@@ -74,15 +85,15 @@ function Header() {
         fetchUserInfo();
     }, [location]);
 
+
     useEffect(() => {
-        setToolbarVisible(false);
+        toggleToolbar(false);
     }, [location]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            console.log("hello")
             if (toolbarRef.current && !toolbarRef.current.contains(event.target)) {
-                setToolbarVisible(false);
+                toggleToolbar(false);
             }
         };
 
@@ -93,76 +104,106 @@ function Header() {
     }, []);
 
 
-    const toggleToolbar = () => {
-        setToolbarVisible(!isToolbarVisible);
-    };
-
     const handleLogout = () => {
         logout();
     };
 
-    const handleLogin = () => {
-        navigate(`/`);
-    };
-
 
     return (
-        <header className="App-header">
+        <nav className={`toolbar ${isToolbarVisible ? 'visible' : ''}`} ref={toolbarRef}>
             <div className="header-left">
                 <img
                     src="list.png"
                     alt="Logo"
                     className="logo"
                     onClick={toggleToolbar}
-
                 />
                 <h1 className="title">Cinematech</h1>
             </div>
 
-            <div className="header-right">
-                <p>
-                    {accountInfo?.username}
-                    {accountInfo?.username && profileInfo?.name && ', '}
-                    {profileInfo?.name}
-                </p>
-                <img
-                    src="user.png"
-                    className="logo"
-                    onClick={handleLogin}
-                />
-            </div>
+            <ul className="menu">
+                <li><Link to="/lib">Home</Link></li>
+                <li><Link to="/search">Search</Link></li>
+                <li><Link to="/discover">Discover</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/downloads">Downloads</Link></li>
+                {accountInfo && (
+                    <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
+                )}
+                {accountInfo && (
+                    <li><Link to="/profiles">Profiles</Link></li>
+                )}
+
+            </ul>
+        </nav>
 
 
-            <nav className={`toolbar ${isToolbarVisible ? 'visible' : ''}`} ref={toolbarRef}>
+    )
+
+
+}
+
+
+function Header({toggleToolbar}) {
+    const [accountInfo, setAccountInfo] = useState(null);
+    const [profileInfo, setProfileInfo] = useState(null);
+
+    let navigate = useNavigate();
+    const location = useLocation();
+
+    const handleLogin = () => {
+        navigate(`/`);
+    };
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const accountInfoResponse = await getAccountInfoAPI();
+                setAccountInfo(accountInfoResponse);
+            } catch (error) {
+                console.log("Failed to fetch account info:");
+            }
+            try {
+                const profileInfoResponse = await getProfileInfoAPI();
+                setProfileInfo(profileInfoResponse);
+            } catch (error) {
+                console.log("Failed to fetch profile info:");
+            }
+        };
+        fetchUserInfo();
+    }, [location]);
+
+    return (
+
+        <div className="cinematech">
+            <header className="App-header">
                 <div className="header-left">
                     <img
                         src="list.png"
                         alt="Logo"
                         className="logo"
                         onClick={toggleToolbar}
+
                     />
                     <h1 className="title">Cinematech</h1>
                 </div>
 
-                <ul className="menu">
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/lib">My Library</Link></li>
-                    <li><Link to="/search">Search</Link></li>
-                    <li><Link to="/discover">Discover</Link></li>
-                    <li><Link to="/contact">Contact</Link></li>
-                    <li><Link to="/downloads">Downloads</Link></li>
-                    {accountInfo && (
-                        <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
-                    )}
-                    {accountInfo && (
-                        <li><Link to="/profiles">Profiles</Link></li>
-                    )}
+                <div className="header-right">
+                    <p>
+                        {accountInfo?.username}
+                        {accountInfo?.username && profileInfo?.name && ', '}
+                        {profileInfo?.name}
+                    </p>
+                    <img
+                        src="user.png"
+                        className="logo"
+                        onClick={handleLogin}
+                    />
+                </div>
 
-                </ul>
-            </nav>
+            </header>
 
-
-        </header>
+        </div>
     );
 }
 
