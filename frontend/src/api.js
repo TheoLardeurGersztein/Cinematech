@@ -7,7 +7,7 @@ export const getMoviesAPI = () => {
     return axios.get(api_url + 'lib/movies/');
 }
 
-export const getMovieAPI = (movieId) => {
+export const getMovieAPI = async (movieId) => {
     return axios.get(api_url + 'lib/movies/' + movieId + '/');
 }
 
@@ -66,7 +66,6 @@ export const refreshAccessToken = async () => {
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
-    return
 }
 
 export const logout = () => {
@@ -131,5 +130,79 @@ export const addProfileAPI = async (name) => {
     return response;
 }
 
+export const setWatchedTimeMovie = async (movieId, watched_time) => {
+    const profileInfo = await getProfileInfoAPI()
+    return axios.post(api_url + "profilemovie/" + profileInfo.id + '/' + movieId + '/', {
+        watched_time: watched_time,
+        movie: movieId,
+        profile: profileInfo.id
+    })
+}
 
+export const getWatchedTimeMovie = async (movieId) => {
+    try {
+        const profileInfo = await getProfileInfoAPI()
+        const response = await axios.get(api_url + "profilemovie/" + profileInfo.id + '/' + movieId + '/')
+        return response.data.watched_time
+    } catch (error) {
+        if (error.response) {
+            return null
+        } else {
+            throw error;
+        }
+    }
+}
+
+
+export const setWatchedTimeEpisode = async (episode_id, watched_time) => {
+    const profileInfo = await getProfileInfoAPI()
+    return axios.post(api_url + "profileepisode/" + profileInfo.id + '/' + episode_id + '/', {
+        watched_time: watched_time,
+        episode: episode_id,
+        profile: profileInfo.id
+    })
+}
+
+
+export const getWatchedTimeEpisode = async (episode_id) => {
+    try {
+        const profileInfo = await getProfileInfoAPI()
+        const response = await axios.get(api_url + "profileepisode/" + profileInfo.id + '/' + episode_id + '/')
+        return response.data.watched_time
+    } catch (error) {
+        return null
+    }
+}
+
+export const getWatchedEpisode = async (episode_id) => {
+    try {
+        const profileInfo = await getProfileInfoAPI()
+        const response = await axios.get(api_url + "profileepisode/" + profileInfo.id + '/' + episode_id + '/')
+        return response.data.watched
+    } catch (error) {
+        return null
+    }
+}
+
+
+export const getContinueWatchingList = async () => {
+    try {
+        const profileInfo = await getProfileInfoAPI()
+        const response = await axios.get(api_url + "profiles/" + profileInfo.id + '/continuewatching/')
+        return response.data
+    } catch (e) {
+        return null
+
+    }
+}
+
+export const getProfileSeries = async (series_id) => {
+    try {
+        const profileInfo = await getProfileInfoAPI()
+        const response = await axios.get(api_url + "profileseries/" + profileInfo.id + '/' + series_id + '/')
+        return response.data
+    } catch (e) {
+        console.log(e)
+    }
+}
 

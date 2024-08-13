@@ -50,4 +50,21 @@ urlpatterns = [
 
     path('api/account/profiles/', profiles_view.ProfileListView.as_view(), name='profile-list'),
 
+    path('api/profileepisode/<int:profile_id>/<int:episode_id>/', profiles_view.ProfileEpisodeViewSet.as_view({
+        'get': 'retrieve',
+        'post': 'update',
+    })),
+
+    path('api/profilemovie/<int:profile_id>/<int:movie_id>/', profiles_view.ProfileMovieViewSet.as_view({
+        'get': 'retrieve',
+        'post': 'update',
+    })),
+
+    path('api/profiles/<int:profile_id>/continuewatching/', profiles_view.ContinueWatchingViewSet.as_view({
+        'get': 'retrieve',
+    })),
+
+    path('api/profileseries/<int:profile_id>/<int:series_id>/', profiles_view.ProfileSeriesViewSet.as_view({
+        'get': 'retrieve',
+    })),
 ]

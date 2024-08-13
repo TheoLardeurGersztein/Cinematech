@@ -1,0 +1,114 @@
+
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Movie container */
+.media-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding: 20px; /* Added padding to create space around the movie cards */
+    display: flex;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    gap: 10px;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+
+}
+
+.category-slider::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+/* Movie card */
+.media-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    overflow: hidden; /* Hide overflow to prevent poster overflow */
+    justify-content: center;
+    flex-shrink: 0;
+    width: 200px;
+    display: flex;
+    overflow: hidden;
+
+}
+
+.media-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Movie poster */
+.media-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ad72b7; /* Purple color */
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    position: relative;
+}
+
+
+.slider-controls {
+    position: relative;
+    width: 100%;
+}
+
+/* Arrow buttons */
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(211, 211, 211, 0.8); /* Light gray with semi-transparency */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+.slider-button.left {
+    left: 10px;
+}
+
+.slider-button.right {
+    right: 10px;
+}
+
+
+/* Arrow styles */
+.slider-button::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    border-top: none;
+    border-right: none;
+}
+
+.slider-button.left::before {
+    transform: rotate(45deg); /* This should now point to the left */
+}
+
+.slider-button.right::before {
+    transform: rotate(-135deg); /* This should now point to the right */
+}

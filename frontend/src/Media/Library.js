@@ -1,47 +1,39 @@
 import React, {useState, useEffect} from 'react';
-import {getMoviesAPI, getSeriesListAPI} from '../api';
-import MovieList from "./MovieCard";
+import {getContinueWatchingList, getMoviesAPI, getSeriesListAPI} from '../api';
+import MediaList from "./MediaCard";
 import './CategoryChoice.css'
 
 
 function Library() {
 
-    const [media, setMedia] = useState([]);
-    const [category, setCategory] = useState('movies'); // Default category is movies
+    const [movies, setMovies] = useState([]);
+    const [series, setSeries] = useState([]);
+    const [continueWatchingList, setContinueWatchingList] = useState([])
 
     useEffect(() => {
-        fetchData();
-    }, [category]);
-
-    function fetchData() {
-        if (category === 'movies') {
-            getMoviesAPI()
-                .then(res => {
-                    const moviesData = res.data;
-                    setMedia(moviesData);
-                })
-        } else if (category === 'series') {
-            getSeriesListAPI() // Assuming you have a function to fetch TV shows data
-                .then(res => {
-                    const seriesData = res.data;
-                    setMedia(seriesData);
-                })
+        const fetchData = async () => {
+            const movies = await getMoviesAPI()
+            setMovies(movies.data)
+            const series = await getSeriesListAPI()
+            setSeries(series.data)
+            const continueWatchingList = await getContinueWatchingList()
+            setContinueWatchingList(continueWatchingList)
         }
-    }
+        fetchData();
+    }, []);
+
 
     return (
-        <div className="button-container">
-            <button
-                className={`category-button ${category === 'movies' ? 'active' : ''}`}
-                onClick={() => setCategory('movies')}>
-                Movies
-            </button>
-            <button
-                className={`category-button ${category === 'series' ? 'active' : ''}`}
-                onClick={() => setCategory('series')}>
-                Series
-            </button>
-            <MovieList movies={media} mediatype={category}/>
+        <div>
+            <h2>Movies</h2>
+            <MediaList medias={movies}/>
+            <h2>Series</h2>
+            <MediaList medias={series}/>
+            {continueWatchingList.length > 0 &&
+                <>
+                    <h2>Continue watching</h2>
+                    <MediaList medias={continueWatchingList}/>
+                </>}
         </div>
     );
 }

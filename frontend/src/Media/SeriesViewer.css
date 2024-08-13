@@ -1,86 +1,91 @@
 
 
-body {
-    background-color: #121212;
-    color: #E0E0E0;
-    font-family: 'Arial', sans-serif;
+
+.series-viewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .series-viewer-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-.movie-viewer-container {
-        flex: 2;
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     padding: 20px;
+
 }
 
 .movie-player {
-    width: 80%;
-    max-width: 900px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-width: 800px; /* Match the maximum width of the video player */
+    height: 450px; /* Fixed height for consistency */
+    border-radius: 8px; /* Rounded corners for the video player */
+    background-color: #000; /* Background color for the video player */
 }
 
-.details-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
+/* Season selector styles */
 .season-selector {
-    margin: 20px;
+    width: 100%;
+    max-width: 800px; /* Match the video player width */
+    margin-bottom: 20px; /* Space below the season selector */
     text-align: center;
 }
 
-
 .season-selector label {
-    font-size: 18px;
-    margin-right: 10px;
-    color: #7C4DFF;
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #ad72b7; /* Violet color for the label */
 }
 
 .season-selector select {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #7C4DFF;
-    background-color: #1E1E1E;
-    color: #E0E0E0;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ad72b7; /* Violet border */
+    border-radius: 4px; /* Rounded corners for the select element */
+    background-color: #222; /* Dark background for the select element */
+    color: #e0e0e0; /* Light text color */
+}
+
+/* Episode list styles */
+.details-container {
+    width: 100%;
+    max-width: 800px; /* Match the video player width */
 }
 
 .episode-list {
-    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* 6 items per row */
+    gap: 10px; /* Space between grid items */
+    list-style: none; /* Remove default list styles */
     padding: 0;
-    margin: 20px;
-    max-width: 600px;
-    margin: 0 auto;
+    margin: 0;
 }
 
 .episode-list li {
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #2C2C2C;
-    border-radius: 5px;
+    background-color: #333; /* Dark background for list items */
+    padding: 15px;
+    border-radius: 4px; /* Rounded corners for list items */
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e0e0e0; /* Light text color */
+    text-align: center;
+    font-size: 0.9rem;
+    width: 60px; /* Fixed height for rectangles */
 }
 
 .episode-list li:hover {
-    background-color: #7C4DFF;
-    transform: translateY(-2px);
+    background-color: #444; /* Slightly lighter background on hover */
 }
 
-.loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 24px;
-    color: #7C4DFF;
+.episode-list li.selected {
+    background-color: #ad72b7; /* Violet color for the selected episode */
+    color: #fff; /* White text color for better readability */
+    border: 2px solid #ad72b7; /* Matching violet border */
 }
+
+
+
