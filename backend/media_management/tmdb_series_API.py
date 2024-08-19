@@ -1,5 +1,7 @@
 import requests
 
+from media_management.models import SeriesGenre
+
 api_key = "5a910ade2d976fa5b6e7dc502263316b"
 api_url_base = f"https://api.themoviedb.org/3/"
 url_api_key = f"?api_key={api_key}"
@@ -49,9 +51,16 @@ def treat_episode_response(response):
     return new_data
 
 
-def discover_series():
-    response = requests.get(f"{api_url_base}discover/tv?language=en-US", headers=header)
-    new_data = treat_list_series_response(response)
+def discover_series(genre):
+    genre_id = SeriesGenre.objects.get(name=genre)
+    if genre_id.id:
+        response = requests.get(f"{api_url_base}discover/tv?sort_by=revenue.desc&with_genres={genre_id.id}",
+                                headers=header)
+        new_data = treat_list_series_response(response)
+        return new_data
+    else:
+        response = requests.get(f"{api_url_base}discover/tv?language=en-US", headers=header)
+        new_data = treat_list_series_response(response)
     if response.status_code == 200:
         return new_data
     else:

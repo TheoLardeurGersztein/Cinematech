@@ -62,14 +62,17 @@ class SearchSeries(generics.ListAPIView):
 class DiscoverMovies(generics.ListAPIView):
     serializer_class = MovieSerializer
     def list(self, request, *args, **kwargs):
-        data = discover_movies()
+        genre = request.GET.get('genre', None)
+        data = discover_movies(genre)
         return Response(data)
 
 class DiscoverSeries(generics.ListAPIView):
     serializer_class = SeriesSerializer
 
     def list(self, request, *args, **kwargs):
-        data = discover_series()
+        genre = request.GET.get('genre', None)
+        print(genre)
+        data = discover_series(genre)
         return Response(data)
 
 
@@ -118,6 +121,5 @@ class TorrentList(generics.ListAPIView):
 class TmbdSeries(generics.ListAPIView):
     def get(self, request, pk):
         data = get_series_from_tmdb_id(pk)  # Use pk as the TMDB ID
-        print(data)
         if data:
             return Response(data)

@@ -1,0 +1,39 @@
+.loading-header {
+    position: relative;
+    background-color: #1a1a1a; /* Dark background */
+}
+
+.loading-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(179, 128, 255, 0) 0%, rgba(179, 128, 255, 0.8) 50%, rgba(179, 128, 255, 0) 100%);
+}
+
+.loading-bar {
+    bottom: 0;
+}
+
+
+.loading-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #e0b3ff; /* Light violet color */
+    animation: loading 3s infinite;
+}
+
+@keyframes loading {
+    0% {
+        left: 0%;
+        right: 95%;
+    }
+    100% {
+        left: 100%;
+        right: 0%;
+    }
+}
+
+

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {getContinueWatchingList, getMoviesAPI, getSeriesListAPI} from '../api';
-import MediaList from "./MediaCard";
+import MediaList from "./MediaList";
 import './CategoryChoice.css'
 
 

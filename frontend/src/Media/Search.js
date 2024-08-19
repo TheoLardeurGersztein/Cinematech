@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {searchMovieAPI, searchSeriesAPI} from "../api";
-import MovieList from "./MovieCard";
 
 import "./Search.css"
 import './CategoryChoice.css'
+import MediaLib from "./MeidaLib";
 
 
 function Search() {
 
     const [formData, setFormData] = useState([])
-    const [media, setMedia] = useState([]);
+    const [medias, setMedias] = useState([]);
     const [category, setCategory] = useState('movies'); // Default category is movies
 
     const handleChange = (e) => {
@@ -23,13 +23,13 @@ function Search() {
             searchMovieAPI(formData.title)
                 .then(res => {
                     const moviesData = res.data;
-                    setMedia(moviesData);
+                    setMedias(moviesData);
                 })
         } else if (category === 'series') {
-            searchSeriesAPI(formData.title) // Assuming you have a function to fetch TV shows data
+            searchSeriesAPI(formData.title)
                 .then(res => {
                     const tvShowsData = res.data;
-                    setMedia(tvShowsData);
+                    setMedias(tvShowsData);
                 })
         }
     };
@@ -63,7 +63,7 @@ function Search() {
                 </form>
             </div>
             <div>
-                <MovieList movies={media} mediatype={category}/>
+                <MediaLib medias={medias} />
             </div>
         </div>
 
