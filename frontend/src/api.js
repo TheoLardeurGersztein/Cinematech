@@ -19,12 +19,26 @@ export const searchSeriesAPI = (title) => {
     return axios.get(api_url + "series/search/?title=" + title)
 }
 
-export const dicoverMoviesAPI = () => {
-    return axios.get(api_url + "movies/discover/")
+export const dicoverMoviesAPI = async (genre) => {
+    if (genre) {
+        const response = await axios.get(api_url + "movies/discover/?genre=" + genre)
+        return response.data
+    } else {
+        const response = await axios.get(api_url + "movies/discover/")
+        return response.data
+
+    }
 }
 
-export const dicoverSeriesAPI = () => {
-    return axios.get(api_url + "series/discover/")
+export const dicoverSeriesAPI = async (genre) => {
+    if (genre) {
+        console.log(genre)
+        const response = await axios.get(api_url + "series/discover/?genre=" + encodeURIComponent(genre))
+        return response.data
+    } else {
+        const response = await axios.get(api_url + "series/discover/")
+        return response.data
+    }
 }
 
 
