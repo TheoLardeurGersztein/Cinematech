@@ -5,15 +5,13 @@ import os
 import re
 import django
 
-from django.shortcuts import get_object_or_404
-
-from tmdb_genres_API import get_movie_genres_from_tmdb, get_series_genres_from_tmdb
-from utilsUpdateDB import get_info_movie_from_file_name, clean_up_file_path, get_info_episode_from_file_name
-from media_management.tmdb_series_API import get_series_id_from_title, get_series_from_tmdb_id, search_series
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 
+from tmdb_genres_API import get_movie_genres_from_tmdb, get_series_genres_from_tmdb
+from utilsUpdateDB import get_info_movie_from_file_name, clean_up_file_path, get_info_episode_from_file_name
+
+from media_management.tmdb_series_API import get_series_id_from_title, get_series_from_tmdb_id, search_series
 from media_management.models import Movie, Episode, Series, MovieGenre, SeriesGenre
 from media_management.tmdb_movies_API import search_movies
 
@@ -42,16 +40,11 @@ def updateMovies(directory):
         if not release_year:
             no_release_year.append(file_name)
 
-        possible_movies = []
-        for possible_movie in search_movies(title):
-            if possible_movie['release_date'][:4:] == release_year:
-                possible_movies.append(possible_movie)
-        if len(possible_movies) != 1:
-            unsure.append(file_name)
-
+        possible_movies = search_movies(title, release_year)
         if len(possible_movies) == 0:
             not_fount.append(title)
             continue
+
         first_possible_movie = possible_movies[0]
         if not Movie.objects.filter(file_path=file_path).exists():
             genres = first_possible_movie['genres']
@@ -61,8 +54,6 @@ def updateMovies(directory):
                 file_path=file_path,
                 duration=duration
                 )
-            print(genres)
-
             entry.save()
             entry.genres.set(genres)
             added.append(title)
@@ -219,14 +210,14 @@ def updateSeriesGenres():
 
 if __name__ == '__main__':
 
-    movie_directory = "D:\Movies"
+    movie_directory = "d:\Movies"
     serie_directory = "D:\Series\\"
 
     updateMovies(movie_directory)
-    updateSeries(serie_directory)
+    #updateSeries(serie_directory)
 
-    updateMovieGenres()
-    updateSeriesGenres()
+    #updateMovieGenres()
+    #updateSeriesGenres()
 
 
 
