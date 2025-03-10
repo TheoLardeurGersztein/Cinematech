@@ -12,7 +12,7 @@ def get_release_year(file_name):
     movie_match = re.search(regex, file_name)
     if movie_match:
         release_year = movie_match.group(0)
-        if release_year in ['1080','2048']:
+        if release_year in ['1080','2048','4096']:
             return None
         else:
             return release_year
@@ -31,6 +31,8 @@ def get_file_path_and_duration_movies(directory, file_path):
             video = VideoFileClip(os.path.join(directory,file_path,file_in_folder))
             duration = video.duration
             return file_path + '/' + file_in_folder, duration
+    return None, None
+
 
 def get_duration_series(file_path):
     if file_path.endswith('.mp4') or file_path.endswith('.mkv'):
@@ -50,7 +52,7 @@ def get_season_and_episode_number(file_path):
         return None, None
 
 def clean_up_file_path(file_path):
-    chars_to_remove = ['.','"',',',';','\'','(',')','^','*','<','>','|','\\',']','[','_']
+    chars_to_remove = ['.','"',';','\'','(',')','^','*','<','>','|','\\',']','[','_']
     for char_to_remove in chars_to_remove:
         file_path = re.sub(re.escape(char_to_remove), ' ', file_path)
     non_title_words = [
@@ -82,7 +84,6 @@ def get_info_movie_from_file_name(directory, file_name):
         "file_path": file_path,
         "duration": duration
     }
-
     return json.dumps(data)
 
 

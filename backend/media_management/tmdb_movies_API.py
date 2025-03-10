@@ -27,8 +27,11 @@ def treat_response(response):
     return new_data
 
 
-def search_movies(title):
-    response = requests.get(f"{api_url_base}search/movie?query={title}&page=1", headers=header)
+def search_movies(title, year=None):
+    if year:
+        response = requests.get(f"{api_url_base}search/movie?query={title}&page=1&primary_release_year={year}", headers=header)
+    else:
+        response = requests.get(f"{api_url_base}search/movie?query={title}&page=1&primary_release_year={year}", headers=header)
     new_data = treat_response(response)
     if response.status_code == 200:
         return new_data
@@ -39,8 +42,9 @@ def search_movies(title):
 def discover_movies(genre):
     genre_id = MovieGenre.objects.get(name=genre)
     if genre_id.id:
-        response = requests.get(f"{api_url_base}discover/movie?language=en-US1&sort_by=revenue.desc&with_genres={genre_id.id}",
-                                headers=header)
+        response = requests.get(
+            f"{api_url_base}discover/movie?language=en-US1&sort_by=revenue.desc&with_genres={genre_id.id}",
+            headers=header)
         new_data = treat_response(response)
         return new_data
     else:

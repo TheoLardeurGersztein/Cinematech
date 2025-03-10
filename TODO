@@ -1,0 +1,3 @@
+- Add removal and edit on profiles on http://localhost:3000/profiles
+- Add search and filters on the library -- http://localhost:3000/lib
+- In library, search, etc keep the placement of the curssors horizontally
