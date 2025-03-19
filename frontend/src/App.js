@@ -4,21 +4,23 @@ import {
     Route, useLocation, useNavigate,
 } from "react-router-dom";
 import './App.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Contact from './Contact/Contact'
-import Library from './Media/Library'
+import Home from './Media/Home'
 import Search from './Media/Search'
 import Discover from "./Media/Discover";
 import MovieDetails from "./Media/MovieDetails";
 import Downloads from "./Media/Downloads";
-import MovieViewer from "./Media/MovieViewer"
 import SeriesViewer from "./Media/SeriesViewer";
 import SeriesDetails from "./Media/SeriesDetails";
 import Login from "./AccountsProfiles/Login";
-import {useEffect, useRef, useState} from "react";
-import {getAccountInfoAPI, getProfileInfoAPI, logout} from "./api";
+import { useEffect, useRef, useState } from "react";
+import { getAccountInfoAPI, getProfileInfoAPI, logout } from "./api";
 import Profile from "./AccountsProfiles/Profile";
 import AddProfile from "./AccountsProfiles/AddProfile";
+import Library from "./Media/Library";
+import VideoPlayer from "./Media/VideoPlayer"
+
 
 function App() {
     const [isToolbarVisible, setToolbarVisible] = useState(false);
@@ -30,26 +32,30 @@ function App() {
 
     return (
         <Router>
-            <Header toggleToolbar={toggleToolbar}/>
-            <Toolbar isToolbarVisible={isToolbarVisible} toggleToolbar={toggleToolbar}/>
+            <Header toggleToolbar={toggleToolbar} />
+            <Toolbar isToolbarVisible={isToolbarVisible} toggleToolbar={toggleToolbar} />
             <div className="main-content">
-
                 <Routes>
-                    <Route exact path="/" element={<Login/>}/>
-                    <Route exact path="/logout" element={<Login/>}/>
-                    <Route exact path="/profiles" element={<Profile/>}/>
-                    <Route exact path="/profiles/add" element={<AddProfile/>}/>
-                    <Route path="/lib" element={<Library/>}/>
-                    <Route path="/search" element={<Search/>}/>
-                    <Route path="/discover" element={<Discover/>}/>
-                    <Route path="/contact" element={<Contact/>}/>
-                    <Route path="/search/movies/details" element={<MovieDetails/>}/>
-                    <Route path="/search/series/details" element={<SeriesDetails/>}/>
-                    <Route path="/discover/movies/details" element={<MovieDetails/>}/>
-                    <Route path="/discover/series/details" element={<SeriesDetails/>}/>
-                    <Route path="/downloads" element={<Downloads/>}/>
-                    <Route path="/lib/movies/:id" element={<MovieViewer/>}/>
-                    <Route path="/lib/series/:id" element={<SeriesViewer/>}/>
+                    <Route exact path="/" element={<Login />} />
+                    <Route exact path="/logout" element={<Login />} />
+                    <Route exact path="/profiles" element={<Profile />} />
+                    <Route exact path="/profiles/add" element={<AddProfile />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/discover" element={<Discover />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/search/movies/details" element={<MovieDetails />} />
+                    <Route path="/search/series/details" element={<SeriesDetails />} />
+                    <Route path="/discover/movies/details" element={<MovieDetails />} />
+                    <Route path="/discover/series/details" element={<SeriesDetails />} />
+                    <Route path="/downloads" element={<Downloads />} />
+                    <Route path="/lib" element={<Library />} />
+                    <Route path="/lib/series/:id" element={<SeriesViewer />} />
+                    <Route path="/home/series/:id" element={<SeriesViewer />} />
+                    <Route path="/lib/movies/:id" element={<VideoPlayer />} />
+                    <Route path="/home/movies/:id" element={<VideoPlayer />} />
+
+
                 </Routes>
             </div>
 
@@ -57,15 +63,12 @@ function App() {
     );
 }
 
-function Toolbar({
-                     isToolbarVisible, toggleToolbar
-                 }) {
+function Toolbar({ isToolbarVisible, toggleToolbar }) {
 
     const [accountInfo, setAccountInfo] = useState(null);
     const [profileInfo, setProfileInfo] = useState(null);
     const toolbarRef = useRef(null);
     const location = useLocation();
-
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -85,15 +88,14 @@ function Toolbar({
         fetchUserInfo();
     }, [location]);
 
-
     useEffect(() => {
-        toggleToolbar(false);
+        toggleToolbar(false); // Hide the toolbar whenever the location changes
     }, [location]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (toolbarRef.current && !toolbarRef.current.contains(event.target)) {
-                toggleToolbar(false);
+                toggleToolbar(false); // Hide the toolbar if the user clicks outside
             }
         };
 
@@ -103,48 +105,43 @@ function Toolbar({
         };
     }, []);
 
-
     const handleLogout = () => {
         logout();
     };
-
 
     return (
         <nav className={`toolbar ${isToolbarVisible ? 'visible' : ''}`} ref={toolbarRef}>
             <div className="header-left">
                 <img
-                    src="list.png"
+                    src="/list.png"
                     alt="Logo"
                     className="logo"
-                    onClick={toggleToolbar}
+                    onClick={() => toggleToolbar(false)} // Close toolbar when clicking the logo inside the toolbar
                 />
-                <h1 className="title">Cinematech</h1>
+                <h1>Cinematech</h1>
             </div>
 
             <ul className="menu">
-                <li><Link to="/lib">Home</Link></li>
+                <li><Link to="/home">Home</Link></li>
                 <li><Link to="/search">Search</Link></li>
                 <li><Link to="/discover">Discover</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/downloads">Downloads</Link></li>
+                <li><Link to="/lib">Library</Link></li>
                 {accountInfo && (
                     <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                 )}
                 {accountInfo && (
                     <li><Link to="/profiles">Profiles</Link></li>
                 )}
-
             </ul>
         </nav>
-
-
-    )
-
-
+    );
 }
 
 
-function Header({toggleToolbar}) {
+
+function Header({ toggleToolbar }) {
     const [accountInfo, setAccountInfo] = useState(null);
     const [profileInfo, setProfileInfo] = useState(null);
 
@@ -155,6 +152,10 @@ function Header({toggleToolbar}) {
         navigate(`/`);
     };
 
+    const handleHome = () => {
+        navigate(`/home`);
+    };
+
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
@@ -173,8 +174,11 @@ function Header({toggleToolbar}) {
         fetchUserInfo();
     }, [location]);
 
-    return (
+    const handleLogoClick = () => {
+        toggleToolbar(prevState => !prevState);
+    };
 
+    return (
         <div className="cinematech">
             <header className="App-header">
                 <div className="header-left">
@@ -182,10 +186,9 @@ function Header({toggleToolbar}) {
                         src="list.png"
                         alt="Logo"
                         className="logo"
-                        onClick={toggleToolbar}
-
+                        onClick={handleLogoClick}
                     />
-                    <h1 className="title">Cinematech</h1>
+                    <h1 className="title" onClick={handleHome}>Cinematech</h1>
                 </div>
 
                 <div className="header-right">
@@ -200,12 +203,11 @@ function Header({toggleToolbar}) {
                         onClick={handleLogin}
                     />
                 </div>
-
             </header>
-
         </div>
     );
 }
+
 
 
 export default App;

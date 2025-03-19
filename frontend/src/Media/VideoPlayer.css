@@ -1,0 +1,26 @@
+.video-js-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.yolo {
+    width: 70%;
+    object-fit: fill;
+}
+
+.video-js.vjs-default-skin {
+    object-fit: contain;
+}
+
+@media only screen and (max-width: 600px) {
+    .yolo {
+        width: 100%;
+    }
+
+    .video-js-container {
+        height: 80%;
+    }
+}
