@@ -26,9 +26,14 @@ def updateMovies(directory):
     unsure = []
     already_exists = []
     added = []
+    bugged = []
 
     for file_name in movie_file_names:
-        info = json.loads(get_info_movie_from_file_name(directory, file_name))
+        try:
+            info = json.loads(get_info_movie_from_file_name(directory, file_name))
+        except:
+            bugged.append(file_name)
+            continue
         title = info['title']
         release_year = info['release_year']
         file_path = info['file_path']
@@ -66,6 +71,7 @@ def updateMovies(directory):
     print("Unsure : ", unsure)
     print("Already exists: ", already_exists)
     print("Added : ", added)
+    print("Bugged : ", bugged)
 
 def updateSeries(directory):
 
@@ -76,6 +82,7 @@ def updateSeries(directory):
     unsure = []
     already_exists = []
     added = []
+    bugged = []
 
     for series in movie_series_names:
 
@@ -107,7 +114,11 @@ def updateSeries(directory):
             for file in files:
                 if file.startswith('.'):
                     continue
-                info = json.loads(get_info_episode_from_file_name(root, file))
+                try:
+                    info = json.loads(get_info_episode_from_file_name(root, file))
+                except:
+                    bugged.append(file)
+                    continue
                 file_path = os.path.join(root, file).removeprefix(directory).replace("\\", "/")
                 season_number = info['season_number']
                 episode_number = info['episode_number']
@@ -136,6 +147,7 @@ def updateSeries(directory):
     print("Episodes not found : ", episodes_not_fount)
     print("Already exists : ", already_exists)
     print("Added : ", added)
+    print("Bugged : ", bugged )
 
     words_to_remove = [
         "Silence", "ESubs", "Subtitles",
@@ -145,7 +157,7 @@ def updateSeries(directory):
         "Extended", "Uncut", "Directors Cut",
         "Special Edition", "Limited Edition",
         "HDR", "Dolby Vision", "Atmos", "IMAX",
-        "[0-9]+bit",  # Match bit depth like 10bit, 8bit, etc.
+        "[0-9]+bit", 
         "Extended Cut", "Uncensored",
         "Remastered", "Restoration",
         "WebRip", "Web-DL",
@@ -210,11 +222,11 @@ def updateSeriesGenres():
 
 if __name__ == '__main__':
 
-    movie_directory = "d:\Movies"
+    movie_directory = "D:\Movies"
     serie_directory = "D:\Series\\"
 
-    updateMovies(movie_directory)
-    #updateSeries(serie_directory)
+    #updateMovies(movie_directory)
+    updateSeries(serie_directory)
 
     #updateMovieGenres()
     #updateSeriesGenres()
