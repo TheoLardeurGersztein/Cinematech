@@ -3,7 +3,7 @@ import {searchMovieAPI, searchSeriesAPI} from "../api";
 
 import "./Search.css"
 import './CategoryChoice.css'
-import MediaLib from "./MeidaLib";
+import MediaLib from "./MediaLib";
 
 
 function Search() {

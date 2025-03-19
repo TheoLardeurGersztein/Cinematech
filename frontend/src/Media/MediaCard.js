@@ -20,7 +20,7 @@ function MediaCard({media}) {
             } else if (mediaType === "movies") {
                 navigate(`${pathname}/movies/details/`, {state: {movie: media}});
             }
-        } else if (pathname === "/lib") {
+        } else if (pathname === "/lib" || pathname === "/home") {
             if (mediaType === "series") {
                 navigate(`/lib/series/${media.id}`);
             } else if (mediaType === "movies") {

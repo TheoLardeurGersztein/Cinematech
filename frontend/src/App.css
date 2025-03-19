@@ -1,45 +1,52 @@
-/* Reset some default styles */
-body, h1, h2, h3, p, ul, li {
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
     margin: 0;
     padding: 0;
 }
 
 
 h1 {
-    font-size: 60px;
+    color: #9c27b0;
+    font-size: 26px;
 }
 
-/* Global styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #111; /* Dark background color */
-    color: #fff; /* Text color */
+    background-color: #111;
+    color: #fff;
     font-size: 25px;
 }
 
 /* Header styles */
 .App-header {
+    height: 40px;
     display: flex;
     align-items: center;
-    background-color: #222; /* Darker background for header */
+    background-color: #222;
     padding: 15px;
     font-size: 16px;
     justify-content: space-between;
-    position: fixed; /* Keeps the header fixed at the top */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Ensures the header spans the full width of the viewport */
+    width: 100%;
     z-index: 500;
 }
 
 
 .title {
-    color: #9c27b0;
-    font-size: 26px;
+    cursor: pointer;
+
 }
 
 
-.header-left, .header-right {
+.header-left,
+.header-right {
     display: flex;
     align-items: center;
 }
@@ -48,9 +55,9 @@ body {
 .logo {
     cursor: pointer;
     margin-right: 30px;
-    width: 40px; /* Set the desired width */
-    height: 40px; /* Set the desired height */
-    object-fit: contain; /* Ensures the image keeps its aspect ratio */
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
 
@@ -81,6 +88,7 @@ body {
 }
 
 .toolbar {
+    position: fixed;
     transform: translateX(-100%);
     z-index: 1000;
 }
@@ -104,13 +112,12 @@ body {
 }
 
 
-/* WebKit-based browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 8px; /* Thin scrollbar */
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #1a1a1a; /* Dark background */
+    background: #1a1a1a;
     border-radius: 10px;
 }
 
@@ -124,5 +131,5 @@ body {
 }
 
 .main-content {
-    padding-top: 60px; /* Same height as the header */
+    padding-top: 71px;
 }

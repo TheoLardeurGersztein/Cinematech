@@ -1,41 +1,54 @@
-import React, {useState, useEffect} from 'react';
-import {getContinueWatchingList, getMoviesAPI, getSeriesListAPI} from '../api';
-import MediaList from "./MediaList";
+import React, {useEffect, useState} from 'react';
+import {getContinueWatchingList, getMoviesAPI, getSeriesListAPI, searchMovieAPI, searchSeriesAPI} from "../api";
+
+import "./Search.css"
 import './CategoryChoice.css'
+import MediaLib from "./MediaLib";
 
 
 function Library() {
 
-    const [movies, setMovies] = useState([]);
-    const [series, setSeries] = useState([]);
-    const [continueWatchingList, setContinueWatchingList] = useState([])
+
+    const [medias, setMedias] = useState([]);
+    const [category, setCategory] = useState('movies'); // Default category is movies
 
     useEffect(() => {
         const fetchData = async () => {
-            const movies = await getMoviesAPI()
-            setMovies(movies.data)
-            const series = await getSeriesListAPI()
-            setSeries(series.data)
-            const continueWatchingList = await getContinueWatchingList()
-            setContinueWatchingList(continueWatchingList)
+            if (category === 'movies') {
+                const movies = await getMoviesAPI()
+                setMedias(movies.data)
+            } else {
+                const series = await getSeriesListAPI()
+                setMedias(series.data)
+            }
         }
         fetchData();
-    }, []);
+    }, [category]);
 
 
     return (
         <div>
-            <h2>Movies</h2>
-            <MediaList medias={movies}/>
-            <h2>Series</h2>
-            <MediaList medias={series}/>
-            {continueWatchingList.length > 0 &&
-                <>
-                    <h2>Continue watching</h2>
-                    <MediaList medias={continueWatchingList}/>
-                </>}
+            <div className="search-container">
+                <div className="button-container">
+                    <button
+                        className={`category-button ${category === 'movies' ? 'active' : ''}`}
+                        onClick={() => setCategory('movies')}>
+                        Movies
+                    </button>
+                    <button
+                        className={`category-button ${category === 'series' ? 'active' : ''}`}
+                        onClick={() => setCategory('series')}>
+                        Series
+                    </button>
+                </div>
+            </div>
+            <div>
+                <MediaLib medias={medias}/>
+            </div>
         </div>
-    );
+
+    )
 }
 
-export default Library;
+
+export default Library
