@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {getAccountToken} from "../api";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAccountToken } from "../api";
 import './Login.css';
 
 
@@ -15,10 +15,10 @@ const Login = () => {
     const handleLogin = async () => {
         try {
             const body =
-                {
-                    username: username,
-                    password: password,
-                };
+            {
+                username: username,
+                password: password,
+            };
             await getAccountToken(body);
             navigate('/profiles');
         } catch (error) {
@@ -35,6 +35,7 @@ const Login = () => {
                     className="login-input"
                     type="text"
                     placeholder="Username"
+                    autoCapitalize="none"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
@@ -46,9 +47,9 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button className="login-button" onClick={handleLogin}>Login</button>
-                {error &&<div className="error-message">
+                {error && <div className="error-message">
                     {error}
-                </div> }
+                </div>}
             </div>
         </div>
     );

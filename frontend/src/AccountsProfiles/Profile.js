@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {getAccountIdAPI, getProfilesAPI, setProfile} from "../api";
-import {useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { getAccountIdAPI, getProfilesAPI, setProfile } from "../api";
+import { useNavigate } from "react-router-dom";
 import './Profile.css';
 import AddProfile from "./AddProfile";
 
@@ -28,7 +28,7 @@ function ProfileSelection() {
             setProfiles(response.data)
         };
         fetchProfiles();
-    }, [accountId, isModalOpen]);
+    }, [accountId, isModalOpen, navigate]);
 
     const handleSelectProfile = (profileId) => {
         setProfile(profileId);
@@ -47,7 +47,7 @@ function ProfileSelection() {
                         onClick={() => handleSelectProfile(profile.id)}
                     >
                         <div className="profile-avatar">
-                            <img src="client.png" alt={profile.name}/>
+                            <img src="client.png" alt={profile.name} />
                         </div>
                         <span className="profile-name">{profile.name}</span>
                     </div>
@@ -58,13 +58,13 @@ function ProfileSelection() {
                     onClick={openModal}
                 >
                     <div className="profile-avatar">
-                        <img src="google-plus.png" alt={"Add profile"}/>
+                        <img src="google-plus.png" alt={"Add profile"} />
                     </div>
                     <span className="profile-name">{"Add profile"}</span>
                 </div>
             </div>
             <div>
-                <AddProfile isOpen={isModalOpen} onClose={closeModal}/>
+                <AddProfile isOpen={isModalOpen} onClose={closeModal} />
             </div>
         </div>
     );
