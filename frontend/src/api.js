@@ -67,7 +67,7 @@ export const getSeriesTmdbAPI = (seriesId) => {
 }
 
 export const getAccountToken = async (body) => {
-    const response = await axios.post(api_url + "account/token/", body)
+    const response = await axiosInstance.post(api_url + "account/token/", body)
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     localStorage.removeItem('selectedProfile');
@@ -76,7 +76,7 @@ export const getAccountToken = async (body) => {
 
 export const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem('refresh_token');
-    const response = await axios.post(api_url + "account/token/refresh/", {refresh: refreshToken})
+    const response = await axiosInstance.post(api_url + "account/token/refresh/", { refresh: refreshToken })
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
@@ -145,18 +145,18 @@ export const addProfileAPI = async (name) => {
 }
 
 export const setWatchedTimeMovie = async (movieId, watched_time) => {
-    const profileInfo = await getProfileInfoAPI()
-    return axios.post(api_url + "profilemovie/" + profileInfo.id + '/' + movieId + '/', {
+    const selectedProfile = localStorage.getItem('selectedProfile');
+    return axios.post(api_url + "profilemovie/" + selectedProfile + '/' + movieId + '/', {
         watched_time: watched_time,
         movie: movieId,
-        profile: profileInfo.id
+        profile: selectedProfile
     })
 }
 
 export const getWatchedTimeMovie = async (movieId) => {
     try {
-        const profileInfo = await getProfileInfoAPI()
-        const response = await axios.get(api_url + "profilemovie/" + profileInfo.id + '/' + movieId + '/')
+        const selectedProfile = localStorage.getItem('selectedProfile');
+        const response = await axios.get(api_url + "profilemovie/" + selectedProfile + '/' + movieId + '/')
         return response.data.watched_time
     } catch (error) {
         if (error.response) {
@@ -169,19 +169,19 @@ export const getWatchedTimeMovie = async (movieId) => {
 
 
 export const setWatchedTimeEpisode = async (episode_id, watched_time) => {
-    const profileInfo = await getProfileInfoAPI()
-    return axios.post(api_url + "profileepisode/" + profileInfo.id + '/' + episode_id + '/', {
+    const selectedProfile = localStorage.getItem('selectedProfile');
+    return axios.post(api_url + "profileepisode/" + selectedProfile + '/' + episode_id + '/', {
         watched_time: watched_time,
         episode: episode_id,
-        profile: profileInfo.id
+        profile: selectedProfile
     })
 }
 
 
 export const getWatchedTimeEpisode = async (episode_id) => {
     try {
-        const profileInfo = await getProfileInfoAPI()
-        const response = await axios.get(api_url + "profileepisode/" + profileInfo.id + '/' + episode_id + '/')
+        const selectedProfile = localStorage.getItem('selectedProfile');
+        const response = await axios.get(api_url + "profileepisode/" + selectedProfile + '/' + episode_id + '/')
         return response.data.watched_time
     } catch (error) {
         return null
@@ -190,8 +190,8 @@ export const getWatchedTimeEpisode = async (episode_id) => {
 
 export const getWatchedEpisode = async (episode_id) => {
     try {
-        const profileInfo = await getProfileInfoAPI()
-        const response = await axios.get(api_url + "profileepisode/" + profileInfo.id + '/' + episode_id + '/')
+        const selectedProfile = localStorage.getItem('selectedProfile');
+        const response = await axios.get(api_url + "profileepisode/" + selectedProfile + '/' + episode_id + '/')
         return response.data.watched
     } catch (error) {
         return null
@@ -201,8 +201,8 @@ export const getWatchedEpisode = async (episode_id) => {
 
 export const getContinueWatchingList = async () => {
     try {
-        const profileInfo = await getProfileInfoAPI()
-        const response = await axios.get(api_url + "profiles/" + profileInfo.id + '/continuewatching/')
+        const selectedProfile = localStorage.getItem('selectedProfile');
+        const response = await axios.get(api_url + "profiles/" + selectedProfile + '/continuewatching/')
         return response.data
     } catch (e) {
         return null
@@ -212,11 +212,12 @@ export const getContinueWatchingList = async () => {
 
 export const getProfileSeries = async (series_id) => {
     try {
-        const profileInfo = await getProfileInfoAPI()
-        const response = await axios.get(api_url + "profileseries/" + profileInfo.id + '/' + series_id + '/')
+        const selectedProfile = localStorage.getItem('selectedProfile');
+        const response = await axios.get(api_url + "profileseries/" + selectedProfile + '/' + series_id + '/')
         return response.data
     } catch (e) {
         console.log(e)
     }
 }
+
 

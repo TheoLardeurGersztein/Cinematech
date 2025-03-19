@@ -1,5 +1,5 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import {
     getProfileSeries,
     getSeriesAPI, getWatchedEpisode,
@@ -7,19 +7,18 @@ import {
     setWatchedTimeEpisode
 } from "../api";
 import "./SeriesViewer.css";
-import {all} from "axios";
 
 function SeriesViewer() {
     const [selectedSeason, setSelectedSeason] = useState(1);
     const videoRef = useRef(null);
-    const {id} = useParams();
+    const { id } = useParams();
     const [series, setSeries] = useState({});
     const [url, setUrl] = useState('');
     const [selectedEpisode, setSelectedEpisode] = useState(null);
     const [selectedEpisodes, setSelectedEpisodes] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const generateSeasons = (n) => Array.from({length: n}, (_, i) => i + 1);
+    const generateSeasons = (n) => Array.from({ length: n }, (_, i) => i + 1);
     const seasons = series.number_of_seasons ? generateSeasons(series.number_of_seasons) : [];
 
 
@@ -127,7 +126,7 @@ function SeriesViewer() {
             <div className="series-viewer-container">
                 {series &&
                     <video className="movie-player" key={url} controls ref={videoRef}>
-                        <source src={url}/>
+                        <source src={url} />
                     </video>
                 }
             </div>

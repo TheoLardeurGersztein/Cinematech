@@ -19,7 +19,7 @@ class ProfileMovie(models.Model):
     liked = models.BooleanField(null=True)
     watched_time = models.IntegerField(null=True)
     def watched(self):
-        return self.watched_time > self.movie.duration * 0.5
+        return self.watched_time > self.movie.duration * 0.9
 
     class Meta:
         unique_together = ('profile', 'movie')
@@ -58,7 +58,7 @@ class ProfileEpisode(models.Model):
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     watched_time = models.IntegerField(null=True)
     def watched(self):
-        return self.watched_time > self.episode.duration * 0.5
+        return self.watched_time > self.episode.duration * 0.8
 
     class Meta:
         unique_together = ('profile', 'episode')
