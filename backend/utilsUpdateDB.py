@@ -1,10 +1,9 @@
 import json
 import os
 import re
+  
 
 from moviepy.video.io.VideoFileClip import VideoFileClip
-
-from tmdb_genres_API import get_movie_genres_from_tmdb
 
 
 def get_release_year(file_name):

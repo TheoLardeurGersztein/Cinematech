@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {getContinueWatchingList, getMoviesAPI, getSeriesListAPI, searchMovieAPI, searchSeriesAPI} from "../api";
+import React, { useEffect, useState } from 'react';
+import { getContinueWatchingList, getMoviesAPI, getSeriesListAPI, searchMovieAPI, searchSeriesAPI } from "../api";
 
 import "./Search.css"
 import './CategoryChoice.css'
@@ -43,7 +43,7 @@ function Library() {
                 </div>
             </div>
             <div>
-                <MediaLib medias={medias}/>
+                <MediaLib medias={medias} />
             </div>
         </div>
 

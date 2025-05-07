@@ -7,6 +7,7 @@ import {
     setWatchedTimeEpisode
 } from "../api";
 import "./SeriesViewer.css";
+import VideoPlayer from "./VideoPlayer";
 
 function SeriesViewer() {
     const [selectedSeason, setSelectedSeason] = useState(1);

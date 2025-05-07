@@ -57,9 +57,7 @@
 
 .error-message {
     color: #ff6f61;
-    /* Red color for error messages */
     background-color: #1e1e1e;
-    /* Dark background to match the card */
     border: 1px solid #ff6f61;
     padding: 0.5em;
     border-radius: 4px;

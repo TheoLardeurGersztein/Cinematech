@@ -76,4 +76,4 @@ class Episode(models.Model):
     file_path = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.series.title} - S{self.season_number}E{self.episode_number}"
+        return f"{self.series.title} - S{self.season_number}E{self.episode_number} - Id {self.id}"
