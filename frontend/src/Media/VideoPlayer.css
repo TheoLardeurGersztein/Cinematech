@@ -6,6 +6,33 @@
     width: 100%;
 }
 
+.vjs-control-bar {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+}
+
+.vjs-play-control {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vjs-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    width: 50px;
+    height: 50px;
+}
+
 .yolo {
     width: 70%;
     object-fit: fill;

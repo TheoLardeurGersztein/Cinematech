@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {getContinueWatchingList, getMoviesAPI, getSeriesListAPI} from '../api';
+import React, { useState, useEffect } from 'react';
+import { getContinueWatchingList, getMoviesAPI, getSeriesListAPI } from '../api';
 import MediaList from "./MediaList";
 import './CategoryChoice.css'
 
@@ -26,13 +26,13 @@ function Home() {
     return (
         <div>
             <h2>Movies</h2>
-            <MediaList medias={movies}/>
+            <MediaList medias={movies} />
             <h2>Series</h2>
-            <MediaList medias={series}/>
+            <MediaList medias={series} />
             {continueWatchingList.length > 0 &&
                 <>
                     <h2>Continue watching</h2>
-                    <MediaList medias={continueWatchingList}/>
+                    <MediaList medias={continueWatchingList} />
                 </>}
         </div>
     );

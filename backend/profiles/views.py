@@ -26,7 +26,7 @@ class ProfilesView(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         profile_id = request.headers.get('X-Profile-ID')
-        if profile_id:
+        if profile_id:  
             try:
                 profile = Profile.objects.get(id=profile_id, user=request.user)
                 serializer = self.get_serializer(profile)

@@ -17,7 +17,6 @@ import Login from "./AccountsProfiles/Login";
 import { useEffect, useRef, useState } from "react";
 import { getAccountInfoAPI, getProfileInfoAPI, logout } from "./api";
 import Profile from "./AccountsProfiles/Profile";
-import AddProfile from "./AccountsProfiles/AddProfile";
 import Library from "./Media/Library";
 import VideoPlayer from "./Media/VideoPlayer"
 
@@ -39,7 +38,6 @@ function App() {
                     <Route exact path="/" element={<Login />} />
                     <Route exact path="/logout" element={<Login />} />
                     <Route exact path="/profiles" element={<Profile />} />
-                    <Route exact path="/profiles/add" element={<AddProfile />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/discover" element={<Discover />} />
@@ -72,12 +70,14 @@ function Toolbar({ isToolbarVisible, toggleToolbar }) {
 
     useEffect(() => {
         const fetchUserInfo = async () => {
+            /*
             try {
                 const accountInfoResponse = await getAccountInfoAPI();
                 setAccountInfo(accountInfoResponse);
             } catch (error) {
                 console.log("Failed to fetch account info:");
             }
+            */
             try {
                 const profileInfoResponse = await getProfileInfoAPI();
                 setProfileInfo(profileInfoResponse);
@@ -128,11 +128,8 @@ function Toolbar({ isToolbarVisible, toggleToolbar }) {
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/downloads">Downloads</Link></li>
                 <li><Link to="/lib">Library</Link></li>
-                {accountInfo && (
+                {profileInfo && (
                     <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
-                )}
-                {accountInfo && (
-                    <li><Link to="/profiles">Profiles</Link></li>
                 )}
             </ul>
         </nav>
@@ -142,7 +139,7 @@ function Toolbar({ isToolbarVisible, toggleToolbar }) {
 
 
 function Header({ toggleToolbar }) {
-    const [accountInfo, setAccountInfo] = useState(null);
+    //const [accountInfo, setAccountInfo] = useState(null);
     const [profileInfo, setProfileInfo] = useState(null);
 
     let navigate = useNavigate();
@@ -158,12 +155,14 @@ function Header({ toggleToolbar }) {
 
     useEffect(() => {
         const fetchUserInfo = async () => {
+            /*
             try {
                 const accountInfoResponse = await getAccountInfoAPI();
                 setAccountInfo(accountInfoResponse);
             } catch (error) {
                 console.log("Failed to fetch account info:");
             }
+            */
             try {
                 const profileInfoResponse = await getProfileInfoAPI();
                 setProfileInfo(profileInfoResponse);
@@ -193,8 +192,6 @@ function Header({ toggleToolbar }) {
 
                 <div className="header-right">
                     <p>
-                        {accountInfo?.username}
-                        {accountInfo?.username && profileInfo?.name && ', '}
                         {profileInfo?.name}
                     </p>
                     <img

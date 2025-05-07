@@ -6,7 +6,7 @@ from .models import Series, Episode
 
 class EpisodeInline(admin.TabularInline):
     model = Episode
-    readonly_fields = ['title', 'season_number', 'episode_number']  # Make specific fields read-only
+    readonly_fields = ['title', 'season_number', 'episode_number', 'id']  # Make specific fields read-only
     fieldsets = (
         (None, {
             'fields': ('id', 'title', 'season_number', 'episode_number')  # Specify only desired fields

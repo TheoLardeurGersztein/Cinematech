@@ -46,7 +46,15 @@ const VideoPlayer = () => {
                         "volumePanel",
                         "customControlSpacer",
                         "fullscreenToggle",
+                        //"playbackRateMenuButton",
                     ],
+
+                    volumePanel: {
+                        inline: false,
+                    },
+
+                    //playbackRates: [0.5, 1, 2],
+
                     progressControl: {
                         seekBar: {
                             children: ["loadProgressBar", "playProgressBar", "seekHandle"],

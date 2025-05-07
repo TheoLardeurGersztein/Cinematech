@@ -1,6 +1,6 @@
 .loading-header {
     position: relative;
-    background-color: #1a1a1a; /* Dark background */
+    background-color: #1a1a1a;
 }
 
 .loading-bar {
@@ -21,19 +21,18 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #e0b3ff; /* Light violet color */
+    background-color: #e0b3ff;
     animation: loading 3s infinite;
 }
 
 @keyframes loading {
     0% {
         left: 0%;
-        right: 95%;
+        right: 85%;
     }
+
     100% {
-        left: 100%;
+        left: 85%;
         right: 0%;
     }
 }
-
-
