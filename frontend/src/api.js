@@ -140,9 +140,26 @@ export const addProfileAPI = async (name) => {
     const response = await axiosInstance.post(api_url + "profiles/", {
         name: name
     })
-    console.log(response)
     return response;
 }
+
+export const renameProfileAPI = async (profileId, name) => {
+    const response = await axiosInstance.put(api_url + "profiles/" + profileId + "/", {
+        name: name
+    })
+    return response;
+}
+
+export const removeProfileAPI = async (profileId, name) => {
+    const response = await axiosInstance.delete(api_url + "profiles/" + profileId + "/", {
+        name: name
+    })
+    return response;
+}
+
+
+
+
 
 export const setWatchedTimeMovie = async (movieId, watched_time) => {
     const selectedProfile = localStorage.getItem('selectedProfile');
