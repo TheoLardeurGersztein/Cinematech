@@ -8,7 +8,6 @@ import './MovieDetails.css'
 function MovieDetails() {
 
     const navigate = useNavigate();
-    const [torrents, setTorrents] = useState([]);
     const [loading, setLoading] = useState(true)
 
     const handleGoBack = (event) => {
