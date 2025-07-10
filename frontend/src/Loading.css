@@ -15,7 +15,6 @@
     bottom: 0;
 }
 
-
 .loading-bar {
     position: absolute;
     left: 0;
@@ -24,6 +23,7 @@
     background-color: #e0b3ff;
     animation: loading 3s infinite;
 }
+
 
 @keyframes loading {
     0% {

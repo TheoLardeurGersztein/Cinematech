@@ -6,12 +6,18 @@ from .models import Profile, ProfileMovie, ProfileSeries, ProfileEpisode, Contin
 class ProfileInline(admin.StackedInline):
     model = Profile
 
+
 class ProfileMovieInline(admin.StackedInline):
     model = ProfileMovie
+
+
 class ProfileSeriesInline(admin.StackedInline):
     model = ProfileSeries
+
+
 class ProfileEpisodeInline(admin.StackedInline):
     model = ProfileEpisode
+
 
 class CustomProfileAdmin(admin.ModelAdmin):
     inlines = [ProfileMovieInline, ProfileSeriesInline, ProfileEpisodeInline]
@@ -32,7 +38,6 @@ class CustomProfileMovie(admin.ModelAdmin):
     )
 
 
-
 class CustomProfileSeries(admin.ModelAdmin):
     model = ProfileSeries
     def display_watched(self, obj):
@@ -49,8 +54,6 @@ class CustomProfileSeries(admin.ModelAdmin):
     )
 
 
-
-
 class CustomProfileEpisode(admin.ModelAdmin):
     model = ProfileEpisode
     def display_watched(self, obj):
@@ -62,12 +65,12 @@ class CustomProfileEpisode(admin.ModelAdmin):
         }),
     )
 
+
 class CustomContinueWatching(admin.ModelAdmin):
     model = ContinueWatchingList
     def display_continue_watching(self, obj):
         return obj.continue_watching
     readonly_fields = ('continue_watching',)
-
 
     fieldsets = (
         (None, {

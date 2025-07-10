@@ -1,49 +1,37 @@
 .search-container {
     text-align: center;
-    /* Center-aligns text and inline elements */
 }
 
 .search-form {
     display: inline-block;
-    /* Center the form as an inline block */
     margin-bottom: 20px;
-    /* Space between search form and subsequent content */
     margin-top: 20px;
 }
 
 .search-form label {
     display: block;
-    /* Make the label a block element */
     margin: 5px;
     font-size: 1.2rem;
     color: #fff;
-    /* Text color */
 }
 
 .search-form input[type="text"] {
     display: block;
-    /* Make the input a block element */
     padding: 10px;
     margin: 10px;
     font-size: 1rem;
     border: 1px solid #9c27b0;
-    /* Purple border color */
     border-radius: 5px;
     background-color: #222;
-    /* Dark background color */
     color: #fff;
-    /* Text color */
     width: 200px;
-    /* Adjust width as needed */
 }
 
 .search-form input[type="text"]:focus {
     outline: none;
     border-color: #9c27b0;
-    /* Purple border color on focus */
 }
 
 .search-form button:hover {
     background-color: #7b1fa2;
-    /* Darker purple on hover */
 }

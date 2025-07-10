@@ -1,4 +1,3 @@
-/* Header styles */
 .App-header {
     height: 40px;
     display: flex;
@@ -43,7 +42,6 @@
 .header-right p {
     margin-right: 10px;
 }
-
 
 .toolbar {
     flex-direction: column;

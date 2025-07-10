@@ -17,11 +17,13 @@ def get_release_year(file_name):
             return release_year
     return None
 
+
 def get_resolution(file_name):
     resolutions = ['1080','720','360','4k','4K','2080','8k','8K']
     for resolution in resolutions:
         if resolution in file_name:
             return resolution
+
 
 def get_file_path_and_duration_movies(directory, file_path):
     files_in_fodler = os.listdir(os.path.join(directory, file_path))
@@ -49,6 +51,7 @@ def get_season_and_episode_number(file_path):
         return season_number, episode_number
     else:
         return None, None
+
 
 def clean_up_file_path(file_path):
     chars_to_remove = ['.','"',';','\'','(',')','^','*','<','>','|','\\',']','[','_']

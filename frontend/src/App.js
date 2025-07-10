@@ -5,12 +5,10 @@ import {
 } from "react-router-dom";
 import './App.css';
 import { Link } from 'react-router-dom';
-import Contact from './Contact/Contact'
 import Home from './Media/Home'
 import Search from './Media/Search'
 import Discover from "./Media/Discover";
 import MovieDetails from "./Media/MovieDetails";
-import Downloads from "./Media/Downloads";
 import SeriesViewer from "./Media/SeriesViewer";
 import SeriesDetails from "./Media/SeriesDetails";
 import Login from "./AccountsProfiles/Login";
@@ -41,12 +39,10 @@ function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/discover" element={<Discover />} />
-                    <Route path="/contact" element={<Contact />} />
                     <Route path="/search/movies/details" element={<MovieDetails />} />
                     <Route path="/search/series/details" element={<SeriesDetails />} />
                     <Route path="/discover/movies/details" element={<MovieDetails />} />
                     <Route path="/discover/series/details" element={<SeriesDetails />} />
-                    <Route path="/downloads" element={<Downloads />} />
                     <Route path="/lib" element={<Library />} />
                     <Route path="/lib/series/:id" element={<SeriesViewer />} />
                     <Route path="/home/series/:id" element={<SeriesViewer />} />
@@ -125,8 +121,6 @@ function Toolbar({ isToolbarVisible, toggleToolbar }) {
                 <li><Link to="/home">Home</Link></li>
                 <li><Link to="/search">Search</Link></li>
                 <li><Link to="/discover">Discover</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-                <li><Link to="/downloads">Downloads</Link></li>
                 <li><Link to="/lib">Library</Link></li>
                 {profileInfo && (
                     <li><Link to="/" onClick={handleLogout}>Logout</Link></li>

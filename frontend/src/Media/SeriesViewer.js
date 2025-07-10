@@ -110,7 +110,8 @@ function SeriesViewer() {
 
     const changeSelectedEpisode = async (episode) => {
         setSelectedEpisode(episode);
-        setUrl(`http://localhost:80/series/${encodeURIComponent(episode.file_path)}`);
+        setUrl(`${process.env.REACT_APP_MEDIA_URL}series/${encodeURIComponent(episode.file_path)}`);
+        console.log(`${process.env.REACT_APP_MEDIA_URL}series/${encodeURIComponent(episode.file_path)}`);
         const time = await getWatchedTimeEpisode(episode.id)
         if (time) {
             videoRef.current.currentTime = time;
@@ -119,7 +120,7 @@ function SeriesViewer() {
 
 
     if (loading) {
-        return <div className="loading">Loading...</div>; // Show loading message or spinner
+        return <div className="loading">Loading...</div>;
     }
 
     return (

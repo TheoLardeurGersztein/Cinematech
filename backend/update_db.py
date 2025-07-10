@@ -194,8 +194,8 @@ def updateSeries(directory):
     ]
 
     patterns_to_remove = [
-        r'\b\d{1,2}bit\b',  # Remove bit depth like 10bit, 8bit, etc.
-        r'\b\d{1,2}\.\d{1,2}\b',  # Remove version numbers like 7.1, 5.1, etc.
+        r'\b\d{1,2}bit\b',  # Remove 10bit, 8bit
+        r'\b\d{1,2}\.\d{1,2}\b',  # Remove 7.1, 5.1
     ]
 
 def updateMovieGenres():
@@ -225,11 +225,13 @@ if __name__ == '__main__':
     movie_directory = "D:\Movies"
     serie_directory = "D:\Series\\"
 
-    #updateMovies(movie_directory)
+    updateMovieGenres()
+    updateSeriesGenres()
+
+    updateMovies(movie_directory)
     updateSeries(serie_directory)
 
-    #updateMovieGenres()
-    #updateSeriesGenres()
+    
 
 
 

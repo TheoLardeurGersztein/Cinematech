@@ -37,7 +37,6 @@
     transform: translateY(-10px);
 }
 
-/* Movie poster */
 .media-poster {
     width: 100%;
     height: 100%;
@@ -49,7 +48,6 @@
     width: 100%;
 }
 
-/* Arrow buttons */
 .slider-button {
     position: absolute;
     top: 50%;
@@ -75,7 +73,6 @@
     right: 10px;
 }
 
-/* Arrow styles */
 .slider-button::before {
     content: '';
     display: inline-block;
@@ -95,6 +92,7 @@
 .slider-button.right::before {
     transform: rotate(-135deg);
 }
+
 
 @media only screen and (max-width: 600px) {
     .slider-button {

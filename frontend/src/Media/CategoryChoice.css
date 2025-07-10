@@ -4,7 +4,5 @@
 
 .category-button.active {
     background-color: darkviolet;
-    /* Darker purple for the active button */
     font-weight: bold;
-    /* Bold text for the active button */
 }

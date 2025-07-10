@@ -7,7 +7,7 @@ import './Login.css';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null); // State to store error messages
+    const [error, setError] = useState(null); 
 
 
     const navigate = useNavigate();

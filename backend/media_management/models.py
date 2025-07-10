@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class MovieGenre(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
 
 class SeriesGenre(models.Model):
     name = models.CharField(max_length=50)
@@ -27,21 +29,6 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Downloading_Movie(models.Model):
-    movie = models.OneToOneField(Movie, on_delete=models.CASCADE, primary_key=True, default=None)
-    title = models.CharField(max_length=255, null=True, blank=True)
-    download_percentage = models.IntegerField(default=0, null=True, blank=True)  # 0-100
-    download_url = models.URLField(null=True, blank=True)
-    download_status = models.CharField(max_length=255, choices=[
-        ("Completed", "Completed"),
-        ("Downloading", "Downloading"),
-        ("Failed", "Failed"),
-    ], null=True, blank=True)
-    downloaded_from = models.CharField(max_length=255, choices=[
-        ("YTS", "YTS"),
-    ], null=True, blank=True)
 
 
 class Series(models.Model):

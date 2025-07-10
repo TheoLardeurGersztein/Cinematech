@@ -33,7 +33,6 @@ class ProfileSeries(models.Model):
     series = models.ForeignKey(Series, on_delete=models.CASCADE)
     liked = models.BooleanField(null=True)
 
-
     def current_episode(self):
         current_season = self.current_season()
         profile_episodes = ProfileEpisode.objects.filter(profile=self.profile, episode__series=self.series,
@@ -65,8 +64,6 @@ class ProfileEpisode(models.Model):
 
     def __str__(self):
         return f"{self.profile} - {self.episode}"
-
-
 
 
 class ContinueWatchingList(models.Model):

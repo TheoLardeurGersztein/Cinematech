@@ -42,6 +42,7 @@
     object-fit: contain;
 }
 
+
 @media only screen and (max-width: 600px) {
     .yolo {
         width: 100%;

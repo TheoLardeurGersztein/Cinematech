@@ -7,10 +7,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+
 class ProfileMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileMovie
         fields = '__all__'
+
 
 class ProfileSeriesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,7 +22,6 @@ class ProfileSeriesSerializer(serializers.ModelSerializer):
             return obj.current_episode()
         def current_season(self, obj):
             return obj.episode()
-
 
 
 class ProfileEpisodeSerializer(serializers.ModelSerializer):

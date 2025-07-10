@@ -17,25 +17,24 @@
 }
 
 .downloading-movie-table-container th {
-  background-color: rgba(106, 27, 154, 0.2); /* Purple background */
-  color: #fff; /* White text color */
+  background-color: rgba(106, 27, 154, 0.2); 
+  color: #fff; 
 }
 
 .downloading-movie-table-container td {
-  background-color: rgba(156, 39, 176, 0.1); /* Darker purple background */
-  color: #fff; /* White text color */
+  background-color: rgba(156, 39, 176, 0.1); 
+  color: #fff; 
 }
 
 .downloading-movie-table-container td span {
   cursor: pointer;
-  margin-right: 10px; /* Spacing between span and link */
+  margin-right: 10px; 
 }
 
 .downloading-movie-table-container td a {
-  color: #fff; /* White link color */
-  text-decoration: none; /* Remove underline */
+  color: #fff;
+  text-decoration: none; 
 }
 
 .downloading-movie-table-container td a:hover {
-  text-decoration: underline; /* Underline on hover */
-}
+  text-decoration: underline; 

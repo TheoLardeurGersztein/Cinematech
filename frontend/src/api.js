@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosInstance from "./axiosInstance";
 
-const api_url = 'http://127.0.0.1:8000/api/'
+export const api_url = process.env.REACT_APP_API_URL;
 
 export const getMoviesAPI = () => {
     return axios.get(api_url + 'lib/movies/');
@@ -26,7 +26,6 @@ export const dicoverMoviesAPI = async (genre) => {
     } else {
         const response = await axios.get(api_url + "movies/discover/")
         return response.data
-
     }
 }
 
@@ -39,11 +38,6 @@ export const dicoverSeriesAPI = async (genre) => {
         const response = await axios.get(api_url + "series/discover/")
         return response.data
     }
-}
-
-
-export const torrentListAPI = (title, year) => {
-    return axios.get(api_url + "torrent/?title=" + title + "&year=" + year)
 }
 
 export const downloadMovie = (body) => {
@@ -157,10 +151,6 @@ export const removeProfileAPI = async (profileId, name) => {
     return response;
 }
 
-
-
-
-
 export const setWatchedTimeMovie = async (movieId, watched_time) => {
     const selectedProfile = localStorage.getItem('selectedProfile');
     return axios.post(api_url + "profilemovie/" + selectedProfile + '/' + movieId + '/', {
@@ -184,7 +174,6 @@ export const getWatchedTimeMovie = async (movieId) => {
     }
 }
 
-
 export const setWatchedTimeEpisode = async (episode_id, watched_time) => {
     const selectedProfile = localStorage.getItem('selectedProfile');
     return axios.post(api_url + "profileepisode/" + selectedProfile + '/' + episode_id + '/', {
@@ -193,7 +182,6 @@ export const setWatchedTimeEpisode = async (episode_id, watched_time) => {
         profile: selectedProfile
     })
 }
-
 
 export const getWatchedTimeEpisode = async (episode_id) => {
     try {
@@ -214,7 +202,6 @@ export const getWatchedEpisode = async (episode_id) => {
         return null
     }
 }
-
 
 export const getContinueWatchingList = async () => {
     try {

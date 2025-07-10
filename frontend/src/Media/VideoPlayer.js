@@ -15,7 +15,7 @@ const VideoPlayer = () => {
     useEffect(() => {
         const getAndSetMovie = async (id) => {
             const response = await getMovieAPI(id);
-            const movieUrl = `http://localhost:80/movies/${encodeURIComponent(response.data.file_path)}`;
+            const movieUrl = `${process.env.REACT_APP_MEDIA_URL}movies/${encodeURIComponent(response.data.file_path)}`;
             setUrl(movieUrl);
 
             if (videoRef.current) {

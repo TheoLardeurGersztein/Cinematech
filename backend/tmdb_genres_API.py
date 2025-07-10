@@ -12,6 +12,7 @@ header = {
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YTkxMGFkZTJkOTc2ZmE1YjZlN2RjNTAyMjYzMzE2YiIsInN1YiI6IjY2MDY4NTQwZjkxODNhMDE3ZjQ3OTA1NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.aYjgFjq1KsVIUuqqJsoPO7d5aBwvqhtGo7ARQc5qfF8"
 }
 
+
 def get_movie_genres_from_tmdb():
     response = requests.get(f"{api_url_base}genre/movie/list?language=en", headers=header)
     if response.status_code == 200:

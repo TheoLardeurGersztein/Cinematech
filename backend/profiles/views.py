@@ -50,8 +50,6 @@ class ProfileListView(APIView):
             return Response()
 
 
-
-
 class ProfileMovieViewSet(viewsets.ModelViewSet):
     queryset = ProfileMovie.objects.all()
     serializer_class = ProfileMovieSerializer

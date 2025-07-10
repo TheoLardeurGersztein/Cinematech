@@ -1,4 +1,4 @@
-from .models import Movie, MovieGenre, Downloading_Movie, SeriesGenre
+from .models import Movie, MovieGenre, SeriesGenre
 
 from django.contrib import admin
 from .models import Series, Episode
@@ -25,5 +25,4 @@ admin.site.register(Series, SeriesAdmin)
 admin.site.register(Movie)
 admin.site.register(MovieGenre)
 admin.site.register(SeriesGenre)
-admin.site.register(Downloading_Movie)
 admin.site.register(Episode)
